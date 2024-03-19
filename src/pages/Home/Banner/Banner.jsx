@@ -53,7 +53,7 @@ const Banner = () => {
               alt=""
             />
           </div>
-          <div className="flex gap-5 md:gap-2 md:flex-col  md:gap-y-8">
+          <div className="flex gap-5 md:gap-2 md:flex-col  md:gap-y-8 dark:text-white">
             <div>
               <p className="text-sm">Kids items</p>
               <Link className="md:text-lg font-semibold ">Special Price</Link>

@@ -25,4 +25,8 @@
       transform: rotate(0deg);
     }
   }
+
+  .product_card_img {
+    @apply block h-full w-full object-cover object-center  transition-transform transform scale-100 group-hover:scale-105 duration-300;
+  }
 }
