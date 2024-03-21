@@ -8,7 +8,7 @@ const Product = ({item}) => {
   const {name,image,new_price,old_price,rating} = item;
     return (
       <Link>
-        <div className="w-full max-w-sm bg-white border border-gray-100 rounded-lg hover:shadow dark:bg-gray-500 dark:border-gray-500 relative group">
+        <div className="w-full max-w-sm bg-white border border-gray-100 rounded-lg hover:shadow-lg dark:bg-gray-500 dark:border-gray-500 relative group">
           <div className="relative overflow-hidden rounded-t-lg">
             <img
               className="rounded-t-lg product_card_img"
