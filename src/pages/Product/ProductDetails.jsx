@@ -9,11 +9,20 @@ import Reviews from "../../components/Reviews/Reviews";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 
 const ProductDetails = () => {
-  const { all_products } = useContext(ShopContext);
-  const { id } = useParams();
-  const product = all_products.find((item) => item.id === parseInt(id));
-  const { name, image, rating, old_price, new_price, category, sub_category } =
-    product;
+  const { all_products, removeToCart, addToCart } = useContext(ShopContext);
+  const { itemId } = useParams();
+  const product = all_products.find((item) => item.id === parseInt(itemId));
+
+  const {
+    id,
+    name,
+    image,
+    rating,
+    old_price,
+    new_price,
+    category,
+    sub_category,
+  } = product;
   const [activeComponent, setActiveComponent] = useState("Description");
 
   // Function to handle component toggle
@@ -25,19 +34,39 @@ const ProductDetails = () => {
       <Container>
         <Breadcrum product={product} />
         <div className="flex flex-col md:flex-row gap-5 md:gap-0">
-          <div className="flex gap-4">
-            <div className="flex flex-col gap-[15px]">
-              <img className="w-40" src={image} alt="" />
-              <img className="w-40" src={image} alt="" />
-              <img className="w-40" src={image} alt="" />
-              <img className="w-40" src={image} alt="" />
+          <div className="md:w-1/2   flex  lg:flex-col-reverse xl:flex-row gap-3">
+            <div className="flex flex-col lg:flex-row xl:flex-col gap-[10px] md:gap-[15px]">
+              <img
+                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
+                src={image}
+                alt=""
+              />
+              <img
+                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
+                src={image}
+                alt=""
+              />
+              <img
+                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
+                src={image}
+                alt=""
+              />
+              <img
+                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
+                src={image}
+                alt=""
+              />
             </div>
             <div>
-              <img className="w-[715px]" src={image} alt="" />
+              <img
+                className="w-[450px] md:w-[500px] lg:w-[500px] xl:w-[710px]"
+                src={image}
+                alt=""
+              />
             </div>
           </div>
-          <div className="flex flex-col md:mx-16">
-            <h1 className="text-4xl font-bold text-gray-700 dark:text-white">
+          <div className="md:w-1/2  flex flex-col md:mx-8 lg:mx-14 xl:mx-15">
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:4xl font-semibold md:font-bold text-gray-700 dark:text-white">
               {name}
             </h1>
             <div className="flex items-center my-3 ">
@@ -50,7 +79,7 @@ const ProductDetails = () => {
                 {rating}
               </span>
             </div>
-            <div className="flex gap-8 text-2xl my-8 font-bold">
+            <div className="flex gap-8 text-lg md:text-2xl my-2 lg:my-4 xl:my-8 font-semibold md:font-bold">
               <p className="line-through text-gray-400">${old_price}</p>
               <p className="text-red-500 dark:text-white">${new_price}</p>
             </div>
@@ -62,10 +91,10 @@ const ProductDetails = () => {
               </p>
             </div>
             <div>
-              <p className="text-xl font-semibold mt-8 text-gray-600 dark:text-white">
+              <p className="text-lg md:text-xl font-semibold mt-4 lg:mt-8 text-gray-600 dark:text-white">
                 Select Size
               </p>
-              <div className="flex gap-5 my-6">
+              <div className="flex gap-5 my-4 lg:my-6">
                 <div className="product_size">S</div>
                 <div className="product_size">M</div>
                 <div className="product_size">L</div>
@@ -74,7 +103,14 @@ const ProductDetails = () => {
               </div>
             </div>
             <div>
-              <button className="primary-btn w-full">ADD TO CART</button>
+              <button
+                onClick={() => {
+                  addToCart(id);
+                }}
+                className="primary-btn w-full"
+              >
+                ADD TO CART
+              </button>
             </div>
             <div className="dark:text-white mt-5 capitalize">
               <span className="font-semibold">Category:</span> {category},{" "}
@@ -88,7 +124,7 @@ const ProductDetails = () => {
         <div className="mt-16 md:mt-28">
           <button
             onClick={() => handleComponentToggle("Description")}
-            className={`border px-10 py-3 font-semibold ${
+            className={`border px-9 md:px-10 py-3 font-semibold ${
               activeComponent === "Description" ? "bg-gray-200" : ""
             }`}
           >
@@ -96,14 +132,16 @@ const ProductDetails = () => {
           </button>
           <button
             onClick={() => handleComponentToggle("Reviews")}
-            className={`border px-10 py-3 font-semibold ${activeComponent === "Reviews" ? "bg-gray-200" : ""}`}
+            className={`border px-9 md:px-10 py-3 font-semibold ${
+              activeComponent === "Reviews" ? "bg-gray-200" : ""
+            }`}
           >
             Reviews
           </button>
         </div>
         {activeComponent === "Description" ? <Description /> : <Reviews />}
         <div>
-            <RelatedProducts/>
+          <RelatedProducts />
         </div>
       </Container>
     </div>

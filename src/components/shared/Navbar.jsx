@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "../Container";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/biglogo.png";
@@ -7,8 +7,12 @@ import { BsCart3 } from "react-icons/bs";
 import { MdMenu } from "react-icons/md";
 
 import ActiveLink from "../ActiveLink/ActiveLink";
+import { ShopContext } from "../../Context/ShopProvider";
 
 const Navbar = () => {
+  const { all_products, cartItems} =
+    useContext(ShopContext);
+    console.log(cartItems);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const user = false;
 
@@ -39,7 +43,7 @@ const Navbar = () => {
             <Link to="/cart" className="relative mt-2 md:mt-1">
               <BsCart3 className="w-6 h-6 dark:text-white" />
               <span className="absolute -top-1.5 -right-2 bg-primary rounded-full text-xs px-1 text-white">
-                0
+                {cartItems.length}
               </span>
             </Link>
             <button onClick={handleThemeToggle}>

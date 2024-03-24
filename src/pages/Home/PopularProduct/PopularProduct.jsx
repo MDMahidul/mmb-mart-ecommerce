@@ -9,7 +9,7 @@ const PopularProduct = () => {
       <div className="dark:bg-gray-600 pb-10">
         <Container>
           <SectionHeader heading={"Popular Products"} />
-          <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5'>
+          <div className=' grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5'>
             {popular_data.map((item) => (
               <Product key={item.id} item={item} />
             ))}

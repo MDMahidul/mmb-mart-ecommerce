@@ -31,13 +31,13 @@ const Women = () => {
       <Container>
         <div className=" flex flex-col gap-y-5 md:flex-row justify-center items-center py-10">
           <div className="md:w-1/2  dark:text-white text-center ">
-            <p className="text-lg py-2 dark:text-white text-red-500 font-semibold">
+            <p className="md:text-lg py-2 dark:text-white text-red-500 font-semibold">
               Check Out New Collection{" "}
             </p>
-            <h2 className="md:text-6xl text-3xl font-semibold ">
+            <h2 className="md:text-6xl text-2xl font-semibold ">
               Elevate Your Style with our Premier Women's Collection
             </h2>
-            <p className="mt-5 text-2xl py-4 dark:text-white text-amber-500 font-semibold">
+            <p className="mt-5 text-lg md:text-2xl mb-2 md:mb-0 md:py-4 dark:text-white text-amber-500 font-semibold">
               Exclusive Collections
             </p>
 
@@ -45,16 +45,17 @@ const Women = () => {
             <TypingEffect words={words} />
           </div>
 
-          <div className="w-1/2">
+          <div className="w-10/12 md:w-1/2">
             <Carousel images={images} />
           </div>
         </div>
         <div>
           <SectionHeader heading={"Women"} />
           <div className="flex justify-between mb-5">
-            <p className="font-semibold">Showing 1-12 out of 36 products</p>
-            <div className="flex items-center gap-4">
-              <p>Filter by</p>
+            <p className="text-sm md:text-base md:font-semibold">
+              Showing 1-12 out of 36 products
+            </p>
+            <div>
               <form className="max-w-sm">
                 <label htmlFor="underline_select" className="sr-only">
                   Underline select
@@ -63,7 +64,7 @@ const Women = () => {
                   id="underline_select"
                   className="block  px-0 w-sm text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                 >
-                  <option selected="">Category</option>
+                  <option selected="">Sort By</option>
                   <option value="shirt">Shirt</option>
                   <option value="tshirt">T-Shirt</option>
                   <option value="saree">Saree</option>
@@ -74,7 +75,7 @@ const Women = () => {
               </form>
             </div>
           </div>
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-10 pb-10 md:pb-12">
+          <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
             {men_collection.map((item) => (
               <Product key={item.id} item={item} />
             ))}

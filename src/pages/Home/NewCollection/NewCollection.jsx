@@ -8,7 +8,7 @@ const NewCollection = () => {
     <div className="dark:bg-gray-600 pb-10">
       <Container>
         <SectionHeader heading={"New Collection"} />
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5">
           {new_collection.map((item) => (
             <Product key={item.id} item={item} />
           ))}

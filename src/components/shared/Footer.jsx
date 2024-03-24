@@ -21,7 +21,7 @@ const Footer = () => {
     <div>
       <footer className=" py-14  dark:bg-gray-600 text-base-content">
         <Container>
-          <div className="flex flex-col md:flex-row justify-between md:items-center gap-5 md:gap-0">
+          <div className="flex flex-col md:flex-row justify-between md:items-center gap-10 md:gap-0">
             <aside className="md:w-1/4">
               <img loading="lazy" className="w-52 md:w-64" src={logo} />
               <p className="text-sm ms-2 mt-2 dark:text-white">
@@ -30,19 +30,19 @@ const Footer = () => {
               </p>
               <div className="flex justify-start space-x-4 mt-5 ms-2 md:py-4">
                 <Link to="#">
-                  <img className="w-8" src={facebook} alt="" />
+                  <img className="w-6 md:w-8" src={facebook} alt="" />
                 </Link>
                 <Link to="#">
-                  <img className="w-8" src={instagram} alt="" />
+                  <img className="w-6 md:w-8" src={instagram} alt="" />
                 </Link>
                 <Link to="#">
-                  <img className="w-8" src={tiktok} alt="" />
+                  <img className="w-6 md:w-8" src={tiktok} alt="" />
                 </Link>
                 <Link to="#">
-                  <img className="w-8" src={twitter} alt="" />
+                  <img className="w-6 md:w-8" src={twitter} alt="" />
                 </Link>
                 <Link to="#">
-                  <img className="w-8" src={youtube} alt="" />
+                  <img className="w-6 md:w-8" src={youtube} alt="" />
                 </Link>
               </div>
             </aside>

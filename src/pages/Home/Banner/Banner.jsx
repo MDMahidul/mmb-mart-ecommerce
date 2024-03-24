@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
-    <div className="h-screen md:pt-24 pt-20  dark:bg-gray-500">
+    <div className="max-h-screen md:pt-24 pt-20  dark:bg-gray-500">
       {/* bg-gradient-to-r from-amber-200 to-yellow-500 */}
       <Container>
         <div className="mt-5 md:mt-0 flex flex-col md:flex-row justify-between items-center gap-5">

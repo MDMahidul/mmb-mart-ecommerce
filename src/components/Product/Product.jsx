@@ -16,8 +16,8 @@ const Product = ({item}) => {
               alt="product image"
             />
           </div>
-          <div className="px-5 pb-5 mt-3 ">
-            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          <div className="px-2 md:px-5 pb-5 mt-3 ">
+            <h5 className="md:text-xl font-medium md:font-semibold tracking-tight text-gray-900 dark:text-white">
               {name}
             </h5>
             <div className="flex items-center mt-2.5 mb-5">
@@ -31,10 +31,10 @@ const Product = ({item}) => {
               </span>
             </div>
             <div className="flex items-center gap-7">
-              <span className="text-lg font-semibold text-gray-900 dark:text-white">
+              <span className="md:text-lg font-semibold text-gray-900 dark:text-white">
                 ${new_price}
               </span>
-              <span className="text-lg font-medium line-through text-gray-400 dark:text-white">
+              <span className="md:text-lg font-medium line-through text-gray-400 dark:text-white">
                 ${old_price}
               </span>
             </div>
