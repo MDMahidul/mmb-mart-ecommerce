@@ -10,6 +10,7 @@ import hoodie from "../../assets/carousel/men/hoddie.jpg";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import TypingEffect from "../../components/TypingEffect/TypingEffect";
 import Product from "../../components/Product/Product";
+import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
 
 const Men = () => {
   const images = [
@@ -28,6 +29,7 @@ const Men = () => {
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">
+      <LoadPageTop />
       <Container>
         <div className=" flex flex-col gap-y-5 md:flex-row justify-center items-center py-10">
           <div className="md:w-1/2  dark:text-white text-center ">
@@ -52,7 +54,9 @@ const Men = () => {
         <div>
           <SectionHeader heading={"Men"} />
           <div className="flex justify-between mb-5">
-            <p className="text-sm md:text-base md:font-semibold">Showing 1-12 out of 36 products</p>
+            <p className="text-sm md:text-base md:font-semibold">
+              Showing 1-12 out of 36 products
+            </p>
             <div className="flex items-center gap-4">
               <form className="max-w-sm">
                 <label htmlFor="underline_select" className="sr-only">

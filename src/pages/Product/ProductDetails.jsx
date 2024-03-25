@@ -7,6 +7,7 @@ import Container from "../../components/Container";
 import Description from "../../components/Description/Description";
 import Reviews from "../../components/Reviews/Reviews";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
+import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
 
 const ProductDetails = () => {
   const { all_products, removeToCart, addToCart } = useContext(ShopContext);
@@ -31,6 +32,7 @@ const ProductDetails = () => {
   };
   return (
     <div className="py-12 md:py-20 dark:bg-gray-500">
+      <LoadPageTop />
       <Container>
         <Breadcrum product={product} />
         <div className="flex flex-col md:flex-row gap-5 md:gap-0">
