@@ -25,7 +25,7 @@ const Men = () => {
   const men_collection = all_products.filter(
     (product) => product.category === "men"
   );
-  console.log(men_collection);
+  //console.log(men_collection);
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">

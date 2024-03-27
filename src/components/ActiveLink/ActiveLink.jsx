@@ -8,9 +8,9 @@ const ActiveLink = ({ to, children }) => {
         to={to}
         className={({ isActive }) =>
           isActive
-            ? " block bg-primary text-white rounded px-2 md:px-0  md:py-0 md:rounded-none md:pb-1  md:text-gray-700 md:dark:text-white  md:border-b-2 md:bg-transparent border-primary"
+            ? " block bg-primary text-white rounded px-2 md:px-0  md:py-0 md:rounded-none md:pb-1  md:text-gray-700 md:dark:text-white  md:border-b-2 md:bg-transparent border-primary "
             : "nav-item"
-        }
+        } 
       >
         {children}
       </NavLink>

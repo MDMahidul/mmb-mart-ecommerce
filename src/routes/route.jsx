@@ -8,6 +8,7 @@ import Women from "../pages/Women/Women";
 import Kids from "../pages/Kids/Kids";
 import ProductDetails from "../pages/Product/ProductDetails";
 import Cart from "../pages/Cart/Cart";
+import CategoryWise from "../pages/Category/CategoryWise";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,34 +19,38 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:'/men',
-        element:<Men/>
+        path: "/men",
+        element: <Men />,
       },
       {
-        path:'/women',
-        element:<Women/>
+        path: "/women",
+        element: <Women />,
       },
       {
-        path:'/kids',
-        element:<Kids/>
+        path: "/kids",
+        element: <Kids />,
       },
       {
-        path:'/product/:itemId',
-        element:<ProductDetails/>
+        path: "/category/:sub_category",
+        element: <CategoryWise />,
       },
       {
-        path:'/cart',
-        element:<Cart/>
+        path: "/product/:itemId",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },
   {
     path: "/login",
-    element:<Login/>
+    element: <Login />,
   },
   {
     path: "/signup",
-    element:<Signup/>
+    element: <Signup />,
   },
 ]);
 

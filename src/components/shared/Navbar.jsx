@@ -11,7 +11,7 @@ import { ShopContext } from "../../Context/ShopProvider";
 
 const Navbar = () => {
   const { all_products, cartItems } = useContext(ShopContext);
-  console.log(cartItems);
+  //console.log(cartItems);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const user = false;
 
