@@ -10,9 +10,9 @@ import ActiveLink from "../ActiveLink/ActiveLink";
 import { ShopContext } from "../../Context/ShopProvider";
 
 const Navbar = () => {
-  const { all_products, cartItems } = useContext(ShopContext);
+  const { all_products, cartItems, theme, setTheme } = useContext(ShopContext);
   //console.log(cartItems);
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
   const user = false;
 
   /* handle theme toggle */
@@ -20,16 +20,6 @@ const Navbar = () => {
     setTheme((prevMode) => (prevMode === "light" ? "dark" : "light"));
     /* setIsRotated(!isRotated); */
   };
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-500 shadow-md fixed w-full z-20 top-0 start-0">

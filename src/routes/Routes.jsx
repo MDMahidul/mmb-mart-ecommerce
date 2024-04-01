@@ -9,6 +9,9 @@ import Kids from "../pages/Kids/Kids";
 import ProductDetails from "../pages/Product/ProductDetails";
 import Cart from "../pages/Cart/Cart";
 import CategoryWise from "../pages/Category/CategoryWise";
+import Dashboard from "../layout/Dashboard";
+import AddProduct from "../pages/Dashboard/Add/AddProduct";
+import ListProduct from "../pages/Dashboard/ListProduct";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,6 +54,24 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <AddProduct />,
+      },
+      {
+        path: "/dashboard/addproduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "/dashboard/listproduct",
+        element: <ListProduct />,
+      },
+    ],
   },
 ]);
 

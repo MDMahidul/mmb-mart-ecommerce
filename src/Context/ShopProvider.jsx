@@ -1,7 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import all_products from "../assets/data/all_product";
 
 export const ShopContext = createContext(null);
+
 const getDefaultCart = () => {
   let cart = {};
   for (let i = 0; i < all_products.length+1; i++) {
@@ -9,15 +10,28 @@ const getDefaultCart = () => {
   }
   return cart;
 };
+
 const ShopProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
-//console.log(cartItem);
+
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  /* add product to cart */
   const addToCart = (itemId) => {
-    setCartItems((prev) => ({...prev,[itemId]:prev[itemId]+1}));
+    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     console.log("clicked");
   };
-  //console.log(cartItems);
 
+  /* remove product from cart */
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
@@ -36,8 +50,15 @@ const ShopProvider = ({ children }) => {
     return totalAmount; // Move return statement here
   };
 
-
-  const shopInfo = { all_products, cartItems, addToCart, removeFromCart,getTotalCartAmount };
+  const shopInfo = {
+    all_products,
+    cartItems,
+    addToCart,
+    removeFromCart,
+    getTotalCartAmount,
+    theme,
+    setTheme,
+  };
 
   return (
     <ShopContext.Provider value={shopInfo}>{children}</ShopContext.Provider>
