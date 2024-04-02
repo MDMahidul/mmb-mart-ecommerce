@@ -11,7 +11,7 @@ import Cart from "../pages/Cart/Cart";
 import CategoryWise from "../pages/Category/CategoryWise";
 import Dashboard from "../layout/Dashboard";
 import AddProduct from "../pages/Dashboard/Add/AddProduct";
-import ListProduct from "../pages/Dashboard/ListProduct";
+import ListProduct from "../pages/Dashboard/ListProduct/ListProduct";
 const router = createBrowserRouter([
   {
     path: "/",

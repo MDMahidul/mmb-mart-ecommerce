@@ -42,4 +42,14 @@
   .sidebar-active {
     @apply bg-gray-300  text-gray-700 dark:text-amber-500 dark:hover:text-white;
   }
+
+  .add-input-field {
+    @apply bg-gray-50 border border-cyan-400 text-gray-900 text-sm rounded-lg block w-full p-2.5  focus:outline-none dark:placeholder-gray-400 ;
+  }
+  .add-product-label {
+    @apply block mb-2 text-sm font-medium text-gray-800 dark:text-white mt-3;
+  }
+    .input_field{
+    @apply w-full px-3 py-2 border rounded-md border-cyan-400 focus:outline-none bg-gray-50 text-gray-900;
+  }
 }
