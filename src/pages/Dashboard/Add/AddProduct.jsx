@@ -4,10 +4,11 @@ import { useForm, Controller } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
 import CreatableSelect from "react-select/creatable";
 import fileUpIcon from "../../../assets/upload_area.svg";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
   const [loading, setLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -46,8 +47,57 @@ const AddProduct = () => {
     setOptions([...options, newOption]);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const productInfo = {
+      name: data.product_title,
+      image: "",
+      category: data.category,
+      sub_category: data.subcategory.value,
+      new_price: data.offer_price,
+      old_price: data.price,
+      description: data.description,
+    };
+    console.log(productInfo);
+    let responseData;
+    let product = productInfo;
+
+    let formData = new FormData();
+    formData.append("product", data.image[0]);
+
+    await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => (responseData = data));
+
+    if (responseData.success) {
+      product.image = responseData.image_url;
+      console.log(product);
+      /* send data to api to add in db */
+      await fetch(`${import.meta.env.VITE_API_URL}/addproduct`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          reset();
+          setUploadButtonText("Upload Image");
+          console.log(data);
+          setLoading(false);
+          toast.success("Product added succefully");
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.error(err.message);
+        });
+    }
   };
   return (
     <div className="">
@@ -67,7 +117,7 @@ const AddProduct = () => {
                 {...register("product_title", { required: true })}
               />
               {errors.product_title && (
-                <span className="text-sm text-red-500">
+                <span className="text-xs text-red-500">
                   Title is required *
                 </span>
               )}
@@ -85,7 +135,7 @@ const AddProduct = () => {
                   {...register("price", { required: true })}
                 />
                 {errors.price && (
-                  <span className=" text-sm text-red-500">
+                  <span className=" text-xs text-red-500">
                     Please select product price *
                   </span>
                 )}
@@ -102,7 +152,7 @@ const AddProduct = () => {
                   {...register("offer_price", { required: true })}
                 />
                 {errors.offer_price && (
-                  <span className=" text-sm text-red-500">
+                  <span className=" text-xs text-red-500">
                     Please select product offer price *
                   </span>
                 )}
@@ -125,7 +175,7 @@ const AddProduct = () => {
                   <option value="kids"> Kids </option>
                 </select>
                 {errors.category && (
-                  <span className=" text-sm text-red-500">
+                  <span className=" text-xs text-red-500">
                     Please select any category *
                   </span>
                 )}
@@ -159,7 +209,7 @@ const AddProduct = () => {
                   )}
                 />
                 {errors.subcategory && (
-                  <span className=" text-sm text-red-500">
+                  <span className=" text-xs text-red-500">
                     Please select any subcategory *
                   </span>
                 )}
@@ -184,14 +234,20 @@ const AddProduct = () => {
                 <div className="flex flex-col w-max mx-auto text-center">
                   <label>
                     <input
-                      onChange={(e) => handleImageChange(e.target.files[0])}
-                      className="text-sm cursor-pointer w-36 hidden"
+                      className="text-xs cursor-pointer w-36 hidden"
                       type="file"
                       name="image"
                       id="image"
                       accept="image/*"
                       hidden
-                      {...register("image", { required: true })}
+                      {...control.register("image", {
+                        onChange: (e) => handleImageChange(e.target.files[0]),
+                        required: true,
+                      })}
+                      /* {...control,register("image", {
+                        required: true,
+                      })} */
+                      /* onChange={handleImageChange} */
                     />
                     <div className="bg-cyan-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-cyan-500">
                       {uploadButtonText}
@@ -199,7 +255,7 @@ const AddProduct = () => {
                   </label>
 
                   {errors.image && (
-                    <span className="text-sm text-red-500">
+                    <span className="text-xs text-red-500">
                       Please select an image *
                     </span>
                   )}

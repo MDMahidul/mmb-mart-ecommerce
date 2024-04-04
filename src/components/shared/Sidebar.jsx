@@ -3,6 +3,7 @@ import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { MdShoppingCart } from "react-icons/md";
 import { HiMiniRectangleStack } from "react-icons/hi2";
 import { HiHome, HiOutlineLogout } from "react-icons/hi";
+import { FaUsers } from "react-icons/fa";
 import logo from "../../assets/biglogo.png";
 import { Link, NavLink } from "react-router-dom";
 
@@ -83,6 +84,17 @@ const Sidebar = () => {
             >
               <HiMiniRectangleStack className="w-5 h-5" />
               <span className="mx-4 font-medium">Product List</span>
+            </NavLink>
+            <NavLink
+              to="users"
+              className={({ isActive }) =>
+                `sidebar ${
+                  isActive ? "sidebar-active" : "text-gray-600 dark:text-white"
+                }`
+              }
+            >
+              <FaUsers className="w-5 h-5" />
+              <span className="mx-4 font-medium">Users List</span>
             </NavLink>
           </nav>
         </div>
