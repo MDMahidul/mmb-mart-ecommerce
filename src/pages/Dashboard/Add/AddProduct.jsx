@@ -56,6 +56,7 @@ const AddProduct = () => {
       sub_category: data.subcategory.value,
       new_price: data.offer_price,
       old_price: data.price,
+      ratings: data.ratings,
       description: data.description,
     };
     console.log(productInfo);
@@ -216,17 +217,36 @@ const AddProduct = () => {
               </div>
             </div>
           </div>
-          <div className="mb-5">
-            <label htmlFor="description" className="add-product-label">
-              Description
-            </label>
-            <textarea
-              id="description"
-              className="add-input-field"
-              placeholder="Write Class Description..."
-              rows="2"
-              {...register("description", { required: false })}
-            />
+          <div className="mb-5 grid grid-cols-1 md:grid-cols-2 md:gap-5 ">
+            <div>
+              <label htmlFor="ratings" className="add-product-label">
+                Ratings
+              </label>
+              <input
+                type="number"
+                id="ratings"
+                className="add-input-field"
+                placeholder="Ratings"
+                {...register("ratings", { required: true })}
+              />
+              {errors.ratings && (
+                <span className="text-xs text-red-500">
+                  Ratings is required *
+                </span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="description" className="add-product-label">
+                Description
+              </label>
+              <textarea
+                id="description"
+                className="add-input-field"
+                placeholder="Write Class Description..."
+                rows="2"
+                {...register("description", { required: false })}
+              />
+            </div>
           </div>
           <div className="mb-5">
             <div className=" p-4 bg-gray-50 w-full  m-auto rounded-lg">

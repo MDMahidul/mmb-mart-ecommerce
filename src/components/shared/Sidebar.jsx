@@ -86,7 +86,7 @@ const Sidebar = () => {
               <span className="mx-4 font-medium">Product List</span>
             </NavLink>
             <NavLink
-              to="users"
+              to="listuser"
               className={({ isActive }) =>
                 `sidebar ${
                   isActive ? "sidebar-active" : "text-gray-600 dark:text-white"

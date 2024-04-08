@@ -10,16 +10,22 @@ import ActiveLink from "../ActiveLink/ActiveLink";
 import { ShopContext } from "../../Context/ShopProvider";
 
 const Navbar = () => {
-  const { all_products, cartItems, theme, setTheme } = useContext(ShopContext);
+  const { all_products, cartItems, theme, setTheme,userRole,setUserRole } = useContext(ShopContext);
   //console.log(cartItems);
-
-  const user = false;
-
+   const [isOpen, setIsOpen] = useState(false);
+//console.log(userRole);
   /* handle theme toggle */
   const handleThemeToggle = () => {
     setTheme((prevMode) => (prevMode === "light" ? "dark" : "light"));
     /* setIsRotated(!isRotated); */
   };
+
+  /* handle singout */
+  const handleSignout=()=>{
+    localStorage.removeItem('auth-token');
+    setUserRole(null);
+    setIsOpen(false)
+  }
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-500 shadow-md fixed w-full z-20 top-0 start-0">
@@ -32,7 +38,7 @@ const Navbar = () => {
             <Link to="/cart" className="relative mt-2 md:mt-1">
               <BsCart3 className="w-6 h-6 dark:text-white" />
               <span className="absolute -top-1.5 -right-2 bg-primary rounded-full text-xs px-1 text-white">
-                {cartItems.length}
+                0
               </span>
             </Link>
             <button onClick={handleThemeToggle}>
@@ -42,80 +48,96 @@ const Navbar = () => {
                 <FiSun className={`w-6 h-6 dark:text-white animate-rotate`} />
               )}
             </button>
-            <button
-              type="button"
-              className="flex text-sm  md:me-0"
-              id="user-menu-button"
-              aria-expanded="false"
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom"
-            >
-              <span className="sr-only">Open user menu</span>
-              <FiUser className="w-6 h-6 dark:text-white mt-2 md:mt-1" />
-            </button>
-            {/* Dropdown menu */}
             <div
-              className=" z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-              id="user-dropdown"
+              onClick={() => setIsOpen(!isOpen)}
+              className=" flex flex-row items-center gap-3 rounded-full cursor-pointer transition"
             >
-              <div className="px-4 py-3">
-                {!user ? (
-                  <span className="block text-sm text-gray-900 dark:text-white">
-                    Please login & enjoy
-                  </span>
-                ) : (
-                  <>
-                    <span className="block text-sm text-gray-900 dark:text-white">
-                      Bonnie Green
-                    </span>
-                    <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                      name@flowbite.com
-                    </span>
-                  </>
-                )}
-              </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                {user ? (
-                  <>
-                    <li>
-                      <Link
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >
-                        Dashboard
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >
-                        Sign out
-                      </button>
-                    </li>
-                  </>
-                ) : (
-                  <>
-                    <li>
-                      <Link
-                        to="/login"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >
-                        Login
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/signup"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >
-                        Signup
-                      </Link>
-                    </li>
-                  </>
-                )}
-              </ul>
+              {/* <span className="sr-only">Open user menu</span> */}
+              <FiUser className="w-6 h-6 dark:text-white md:mt-1" />
             </div>
+            {/* Dropdown menu */}
+            {isOpen && (
+              <div
+                className="absolute my-4 text-base list-none bg-white overflow-hidden right-1 top-14 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                id="user-dropdown"
+              >
+                <div className="px-4 py-3">
+                  {!userRole ? (
+                    <span className="block text-sm text-gray-900 dark:text-white">
+                      Please login & enjoy
+                    </span>
+                  ) : (
+                    <>
+                      <span className="block text-sm text-gray-900 dark:text-white">
+                        Welcome to MMB Mart
+                      </span>
+                    </>
+                  )}
+                </div>
+                <ul className="py-2" aria-labelledby="user-menu-button">
+                  {userRole ? (
+                    userRole === "admin" ? (
+                      <>
+                        <li>
+                          <Link
+                            to="/dashboard"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => handleSignout()}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          >
+                            Sign out
+                          </button>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                            to="/cart"
+                          >
+                            My Cart
+                          </Link>
+                        </li>
+                        <li>
+                          <button
+                            onClick={() => handleSignout()}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          >
+                            Sign out
+                          </button>
+                        </li>
+                      </>
+                    )
+                  ) : (
+                    <>
+                      <li>
+                        <Link
+                          to="/login"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Login
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/signup"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Signup
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            )}
 
             <button
               data-collapse-toggle="navbar-cta"

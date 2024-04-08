@@ -12,6 +12,7 @@ import CategoryWise from "../pages/Category/CategoryWise";
 import Dashboard from "../layout/Dashboard";
 import AddProduct from "../pages/Dashboard/Add/AddProduct";
 import ListProduct from "../pages/Dashboard/ListProduct/ListProduct";
+import ListUsers from "../pages/Dashboard/ListUsers/ListUsers";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/listproduct",
         element: <ListProduct />,
+      },
+      {
+        path: "/dashboard/listuser",
+        element: <ListUsers />,
       },
     ],
   },

@@ -13,6 +13,7 @@ const getDefaultCart = () => {
 
 const ShopProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [userRole,setUserRole]=useState(null);
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {
@@ -57,7 +58,7 @@ const ShopProvider = ({ children }) => {
     removeFromCart,
     getTotalCartAmount,
     theme,
-    setTheme,
+    setTheme, userRole,setUserRole
   };
 
   return (
