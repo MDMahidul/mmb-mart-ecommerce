@@ -13,10 +13,12 @@ import Dashboard from "../layout/Dashboard";
 import AddProduct from "../pages/Dashboard/Add/AddProduct";
 import ListProduct from "../pages/Dashboard/ListProduct/ListProduct";
 import ListUsers from "../pages/Dashboard/ListUsers/ListUsers";
+import Error from "../components/Error/ErrorPage";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement:<Error/>,
     children: [
       {
         index: true,

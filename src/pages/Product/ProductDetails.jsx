@@ -10,9 +10,9 @@ import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
 
 const ProductDetails = () => {
-  const { all_products, removeToCart, addToCart } = useContext(ShopContext);
+  const { products, removeToCart, addToCart } = useContext(ShopContext);
   const { itemId } = useParams();
-  const product = all_products.find((item) => item.id === parseInt(itemId));
+  const product = products.find((item) => item.id === parseInt(itemId));
 
   const {
     id,

@@ -11,6 +11,8 @@ import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import TypingEffect from "../../components/TypingEffect/TypingEffect";
 import Product from "../../components/Product/Product";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
+import useCategory from "../../hooks/useCategory";
+import Loader from "../../components/Loader/Loader";
 
 const Women = () => {
   const images = [
@@ -21,11 +23,9 @@ const Women = () => {
     { id: 5, src: tops },
   ];
   const words = ["Tops", "Saree", "Shirt", "T-Shirt", "Kurta"];
-  const { all_products } = useContext(ShopContext);
-  const men_collection = all_products.filter(
-    (product) => product.category === "women"
-  );
-  console.log(men_collection);
+
+  /* use hook to get data from db  */
+  const [categoriesWiseProducts, isLoading, isError] = useCategory("women");
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">
@@ -77,17 +77,32 @@ const Women = () => {
               </form>
             </div>
           </div>
-          <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
-            {men_collection.map((item) => (
-              <Product key={item.id} item={item} />
-            ))}
+          {isError && (
+            <p className="text-center text-gray-400">Something went wrong!</p>
+          )}
+          {isLoading ? (
+            <Loader height={"h-[40vh]"} />
+          ) : (
+            <>
+              <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
+                {categoriesWiseProducts.map((item) => (
+                  <Product key={item.id} item={item} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+        {categoriesWiseProducts.length <= 0 ? (
+          <p className="text-center text-gray-400 my-8">
+            Something went wrong!
+          </p>
+        ) : (
+          <div className="text-center pb-5 md:pb-10">
+            <button type="btn" className="primary-btn">
+              Explore More
+            </button>
           </div>
-        </div>
-        <div className="text-center pb-5 md:pb-10">
-          <button type="btn" className="primary-btn">
-            Explore More
-          </button>
-        </div>
+        )}
       </Container>
     </div>
   );

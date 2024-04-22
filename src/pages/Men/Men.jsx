@@ -1,5 +1,3 @@
-import React, { useContext } from "react";
-import { ShopContext } from "../../Context/ShopProvider";
 import Carousel from "../../components/Carousel/Carousel";
 import Container from "../../components/Container";
 import panjabi from "../../assets/carousel/men/panjabi.jpg";
@@ -11,6 +9,8 @@ import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import TypingEffect from "../../components/TypingEffect/TypingEffect";
 import Product from "../../components/Product/Product";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
+import useCategory from "../../hooks/useCategory";
+import Loader from "../../components/Loader/Loader";
 
 const Men = () => {
   const images = [
@@ -21,10 +21,9 @@ const Men = () => {
     { id: 5, src: hoodie },
   ];
   const words = ["Panjabi", "Shirt", "T-Shirt", "Jacket", "Hoodie"];
-  const { all_products } = useContext(ShopContext);
-  const men_collection = all_products.filter(
-    (product) => product.category === "men"
-  );
+
+  /* use hook to get data from db  */
+  const [categoriesWiseProducts, isLoading, isError] = useCategory("men");
   //console.log(men_collection);
 
   return (
@@ -76,17 +75,30 @@ const Men = () => {
               </form>
             </div>
           </div>
-          <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
-            {men_collection.map((item) => (
-              <Product key={item.id} item={item} />
-            ))}
-          </div>
+          {isError && (
+            <p className="text-center text-gray-400">Something went wrong!</p>
+          )}
+          {isLoading ? (
+            <Loader height={"h-[40vh]"} />
+          ) : (
+            <>
+              <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
+                {categoriesWiseProducts.map((item) => (
+                  <Product key={item.id} item={item} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
-        <div className="text-center pb-5 md:pb-10">
-          <button type="btn" className="primary-btn">
-            Explore More
-          </button>
-        </div>
+        {categoriesWiseProducts.length <= 0 ? (
+            <p className="text-center text-gray-400 my-8">Something went wrong!</p>
+          ) : (
+            <div className="text-center pb-5 md:pb-10">
+              <button type="btn" className="primary-btn">
+                Explore More
+              </button>
+            </div>
+          )}
       </Container>
     </div>
   );

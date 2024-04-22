@@ -24,7 +24,8 @@ const ListProduct = () => {
   return (
     <>
       <DashboardHeader title={"All Products List"} />
-      <div className="my-8">
+        <h2 className="my-5 font-medium">Total Products: {products.length}</h2>
+      <div className="mb-8">
         <div className="relative overflow-x-auto  sm:rounded-lg">
           {isLoading ? (
             <Loader height={"h-[50vh]"} />

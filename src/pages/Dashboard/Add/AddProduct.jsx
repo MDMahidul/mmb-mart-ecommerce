@@ -223,7 +223,7 @@ const AddProduct = () => {
                 Ratings
               </label>
               <input
-                type="number"
+                type="text"
                 id="ratings"
                 className="add-input-field"
                 placeholder="Ratings"

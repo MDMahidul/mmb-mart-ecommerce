@@ -10,10 +10,11 @@ import ActiveLink from "../ActiveLink/ActiveLink";
 import { ShopContext } from "../../Context/ShopProvider";
 
 const Navbar = () => {
-  const { all_products, cartItems, theme, setTheme,userRole,setUserRole } = useContext(ShopContext);
+  const { products, cartItems, theme, setTheme, userRole, setUserRole } =
+    useContext(ShopContext);
   //console.log(cartItems);
-   const [isOpen, setIsOpen] = useState(false);
-//console.log(userRole);
+  const [isOpen, setIsOpen] = useState(false);
+  //console.log(userRole);
   /* handle theme toggle */
   const handleThemeToggle = () => {
     setTheme((prevMode) => (prevMode === "light" ? "dark" : "light"));
@@ -21,11 +22,11 @@ const Navbar = () => {
   };
 
   /* handle singout */
-  const handleSignout=()=>{
-    localStorage.removeItem('auth-token');
+  const handleSignout = () => {
+    localStorage.removeItem("auth-token");
     setUserRole(null);
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-500 shadow-md fixed w-full z-20 top-0 start-0">

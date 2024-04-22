@@ -30,7 +30,7 @@
   }
 
   .product_card_img {
-    @apply block h-full w-full object-cover object-center  transition-transform transform scale-100 group-hover:scale-105 duration-300;
+    @apply block h-96 w-full object-cover object-center  transition-transform transform scale-100 group-hover:scale-105 duration-300;
   }
   .product_size {
     @apply px-4 md:px-5 py-3 md:py-4 bg-gray-100 border border-gray-200 rounded cursor-pointer hover:shadow font-semibold text-gray-600;

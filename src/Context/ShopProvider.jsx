@@ -1,17 +1,19 @@
 import { createContext, useEffect, useState } from "react";
-import all_products from "../assets/data/all_product";
+//import products from "../assets/data/all_product";
+import useProducts from "../hooks/useProducts";
 
 export const ShopContext = createContext(null);
 
 const getDefaultCart = () => {
   let cart = {};
-  for (let i = 0; i < all_products.length+1; i++) {
+  for (let i = 0; i < 300+1; i++) {
     cart[i] = 0;
   }
   return cart;
 };
 
 const ShopProvider = ({ children }) => {
+  const [products] = useProducts();
   const [cartItems, setCartItems] = useState(getDefaultCart());
   const [userRole,setUserRole]=useState(null);
 
@@ -41,7 +43,7 @@ const ShopProvider = ({ children }) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = all_products.find(
+        let itemInfo = products.find(
           (product) => product.id === parseInt(item)
         );
         totalAmount += itemInfo.new_price * cartItems[item];
@@ -52,7 +54,7 @@ const ShopProvider = ({ children }) => {
   };
 
   const shopInfo = {
-    all_products,
+    products,
     cartItems,
     addToCart,
     removeFromCart,

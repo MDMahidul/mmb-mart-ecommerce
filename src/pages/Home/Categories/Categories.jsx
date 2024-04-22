@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 export default function Categories() {
   const [swiperRef, setSwiperRef] = useState(null);
-
+ 
   return (
     <div className="dark:bg-gray-600">
       <Container>

@@ -1,18 +1,34 @@
-import React, { useContext } from "react";
 import Container from "../../components/Container";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import { useParams } from "react-router-dom";
-import { ShopContext } from "../../Context/ShopProvider";
 import Product from "../../components/Product/Product";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
-import banner from "../../assets/images/banner2_3.png";
+import banner from "../../assets/images/offerban.png";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loader from "../../components/Loader/Loader";
 
 const CategoryWise = () => {
   const { sub_category } = useParams();
-  const { all_products } = useContext(ShopContext);
-  const collections = all_products.filter(
-    (product) => product.sub_category === sub_category
-  );
+  console.log(sub_category);
+  /* get sub categories data from api */
+  const {
+    data: subCategoriseData = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["subCategoriseData"],
+    queryFn: async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/subcategories/${sub_category}`
+      );
+      return res.data;
+    },
+  });
+
+  if(isError){
+    <p>erorororororro</p>
+  }
   return (
     <div className="pt-[75px] md:pt-[81px] dark:bg-gray-500">
       <LoadPageTop />
@@ -22,13 +38,18 @@ const CategoryWise = () => {
 
       <Container>
         <SectionHeader heading={sub_category} />
-        {collections.length <= 0 ? (
+        {isError && (
+          <p className="text-center text-gray-400">Something went wrong!</p>
+        )}
+        {isLoading ? (
+          <Loader height={"h-[40vh]"} />
+        ) : subCategoriseData.length <= 0 ? (
           <p className="text-center text-2xl font-medium text-slate-400">
-            No item found
+            No items found
           </p>
         ) : (
-          <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
-            {collections.map((item) => (
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
+            {subCategoriseData.map((item) => (
               <Product key={item.id} item={item} />
             ))}
           </div>
