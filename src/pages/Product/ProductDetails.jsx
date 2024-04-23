@@ -11,8 +11,10 @@ import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
 
 const ProductDetails = () => {
   const { products, removeToCart, addToCart } = useContext(ShopContext);
-  const { itemId } = useParams();
-  const product = products.find((item) => item.id === parseInt(itemId));
+  const { itemName } = useParams();
+  const product = products.find((item) => item.name === itemName);
+  /* const { itemId } = useParams();
+  const product = products.find((item) => item.id === parseInt(itemId)); */
 
   const {
     id,

@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <CategoryWise />,
       },
       {
-        path: "/product/:itemId",
+        path: "/product/:itemName",
         element: <ProductDetails />,
       },
       {

@@ -1,48 +1,88 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { ImSpinner9 } from "react-icons/im";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ShopContext } from "../../Context/ShopProvider";
 
 const Login = () => {
-  const { setUserRole } = useContext(ShopContext);
+  const { userLogin, loading, setLoading, resetPassword, googleSignIn } =
+    useContext(ShopContext);
   const [showPassword, setShowPassword] = useState(false);
   const [inputType, setInputType] = useState("password");
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const onSubmit = async (data) => {
-    const loginData = {
-      email: data.email,
-      password: data.password,
-    };
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/login`,
-        loginData
-      );
-      //console.log(res.data);
-
-      if (res.data.success) {
-        localStorage.setItem("auth-token", res.data.token);
-        setUserRole(res.data.role);
-        toast.success("Successfully logged in");
-        navigate("/");
-      }else{
-        toast.error(res.data.errors);
-      }
-    } catch (err) {
-      console.log(err.message);
-      toast.error(err.message);
-    }
+    userLogin(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+        toast.success("Successfully Login!");
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+        toast.error(err.message);
+        reset();
+      });
   };
+
+  const handleRestPassword = () => {
+    const email = getValues("email");
+    console.log(email);
+    resetPassword(email)
+      .then(() => {
+        setLoading(false);
+        toast.success("Please check your email !!!");
+        reset();
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+        toast.error(err.message);
+        reset();
+      });
+  };
+
+   const handleGoogleSignin = () => {
+     googleSignIn()
+       .then((result) => {
+         const { user } = result;
+         const signUpData = {
+           username: user?.displayName,
+           email: user?.email,
+         };
+         try {
+           axios.post(`${import.meta.env.VITE_API_URL}/signup`, signUpData);
+           navigate("/");
+           toast.success("Successfully signed up");
+         } catch (err) {
+           console.log(err.message);
+           if (err.response) {
+             toast.error(err.response.data.errors || err.message);
+           } else {
+             toast.error("An error occurred. Please try again later.");
+           }
+         }
+       })
+       .catch((err) => {
+         setLoading(false);
+         console.log(err.message);
+         toast.error(err.message);
+       });
+   };
 
   /* to toggle password input type */
   const togglePassword = () => {
@@ -106,27 +146,39 @@ const Login = () => {
               {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </div>
           </div>
-          <div className="">
-            <Link
-              to="#"
-              className="ms-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
-            >
-              Forget Password?
-            </Link>
-          </div>
           <button type="submit" className="w-full primary-btn">
-            Continue
+            {loading ? (
+              <ImSpinner9 className="m-auto animate-spin" size={24} />
+            ) : (
+              "Continue"
+            )}
           </button>
-          <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-            Not registered?{" "}
-            <Link
-              to="/signup"
-              className="text-blue-700 hover:underline dark:text-blue-500"
-            >
-              Create account
-            </Link>
-          </div>
         </form>
+        <div className="mb-5 mt-2">
+          <button
+            onClick={handleRestPassword}
+            className="ms-auto text-sm text-blue-700 hover:underline dark:text-blue-500"
+          >
+            Forget Password?
+          </button>
+        </div>
+        <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+          Not registered?{" "}
+          <Link
+            to="/signup"
+            className="text-blue-700 hover:underline dark:text-blue-500"
+          >
+            Create account
+          </Link>
+        </div>
+        <div
+          onClick={handleGoogleSignin}
+          className="flex justify-center items-center space-x-2 border  mt-4 mb-2 p-2 border-gray-300 border-rounded cursor-pointer text-sm hover:bg-gray-100"
+        >
+          <FcGoogle size={25} />
+
+          <p>Continue with Google</p>
+        </div>
       </div>
     </div>
   );

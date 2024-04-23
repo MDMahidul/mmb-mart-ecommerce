@@ -4,11 +4,20 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { ImSpinner9 } from "react-icons/im";
+import { FcGoogle } from "react-icons/fc";
 import { ShopContext } from "../../Context/ShopProvider";
 
 const SignUp = () => {
   const [disabled, setDisabled] = useState(true);
-  const { setUserRole } = useContext(ShopContext);
+  const {
+    setUserRole,
+    createUser,
+    setLoading,
+    loading,
+    updateUserProfile,
+    googleSignIn,
+  } = useContext(ShopContext);
   const {
     register,
     handleSubmit,
@@ -23,31 +32,68 @@ const SignUp = () => {
     setShowPassword(!showPassword);
     setInputType(showPassword ? "password" : "text");
   };
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const signUpData = {
       username: data.name,
       email: data.email,
-      password: data.password,
     };
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/signup`,
-        signUpData
-      );
-      localStorage.setItem("auth-token", res.data.token);
-      setUserRole(res.data.role);
-      navigate("/");
-      toast.success("Successfully signed up");
-    } catch (err) {
-      console.log(err.message);
-      if (err.response) {
-        toast.error(err.response.data.errors || err.message);
-      } else if (err.request) {
-        toast.error("Network error. Please check your internet connection.");
-      } else {
-        toast.error("An error occurred. Please try again later.");
-      }
-    }
+    createUser(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+        updateUserProfile(data.name)
+          .then(() => {
+            try {
+              axios.post(`${import.meta.env.VITE_API_URL}/signup`, signUpData);
+              navigate("/");
+              toast.success("Successfully signed up");
+            } catch (err) {
+              console.log(err.message);
+              if (err.response) {
+                toast.error(err.response.data.errors || err.message);
+              } else {
+                toast.error("An error occurred. Please try again later.");
+              }
+            }
+          })
+          .catch((err) => {
+            setLoading(false);
+            console.log(err.message);
+            toast.error(err.message);
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+        toast.error(err.message);
+      });
+  };
+
+  const handleGoogleSignin = () => {
+    googleSignIn()
+      .then((result) => {
+        const { user } = result;
+        const signUpData = {
+          username: user?.displayName,
+          email: user?.email,
+        };
+        try {
+          axios.post(`${import.meta.env.VITE_API_URL}/signup`, signUpData);
+          navigate("/");
+          toast.success("Successfully signed up");
+        } catch (err) {
+          console.log(err.message);
+          if (err.response) {
+            toast.error(err.response.data.errors || err.message);
+          } else {
+            toast.error("An error occurred. Please try again later.");
+          }
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+        toast.error(err.message);
+      });
   };
 
   return (
@@ -152,7 +198,11 @@ const SignUp = () => {
             }`}
             disabled={disabled}
           >
-            Continue
+            {loading ? (
+              <ImSpinner9 className="m-auto animate-spin" size={24} />
+            ) : (
+              "Continue"
+            )}
           </button>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             Already have account?{" "}
@@ -164,6 +214,14 @@ const SignUp = () => {
             </Link>
           </div>
         </form>
+        <div
+          onClick={handleGoogleSignin}
+          className="flex justify-center items-center space-x-2 border  mt-4 mb-2 p-2 border-gray-300 border-rounded cursor-pointer text-sm hover:bg-gray-100"
+        >
+          <FcGoogle size={25} />
+
+          <p>Continue with Google</p>
+        </div>
       </div>
     </div>
   );

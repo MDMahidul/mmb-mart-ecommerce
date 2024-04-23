@@ -10,11 +10,11 @@ import ActiveLink from "../ActiveLink/ActiveLink";
 import { ShopContext } from "../../Context/ShopProvider";
 
 const Navbar = () => {
-  const { products, cartItems, theme, setTheme, userRole, setUserRole } =
+  const { products, cartItems,user,logOut, theme, setTheme, userRole, setUserRole } =
     useContext(ShopContext);
-  //console.log(cartItems);
+  console.log(user);
   const [isOpen, setIsOpen] = useState(false);
-  //console.log(userRole);
+  console.log(userRole);
   /* handle theme toggle */
   const handleThemeToggle = () => {
     setTheme((prevMode) => (prevMode === "light" ? "dark" : "light"));
@@ -63,7 +63,7 @@ const Navbar = () => {
                 id="user-dropdown"
               >
                 <div className="px-4 py-3">
-                  {!userRole ? (
+                  {!user ? (
                     <span className="block text-sm text-gray-900 dark:text-white">
                       Please login & enjoy
                     </span>
@@ -76,7 +76,7 @@ const Navbar = () => {
                   )}
                 </div>
                 <ul className="py-2" aria-labelledby="user-menu-button">
-                  {userRole ? (
+                  {user ? (
                     userRole === "admin" ? (
                       <>
                         <li>
@@ -108,8 +108,8 @@ const Navbar = () => {
                         </li>
                         <li>
                           <button
-                            onClick={() => handleSignout()}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                            onClick={() => logOut()}
+                            className="block px-4 text-left py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full"
                           >
                             Sign out
                           </button>

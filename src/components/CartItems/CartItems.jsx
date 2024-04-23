@@ -3,7 +3,7 @@ import { ShopContext } from "../../Context/ShopProvider";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const CartItems = () => {
-  const { products, cartItems, removeFromCart, getTotalCartAmount } =
+  const { all_products, cartItems, removeFromCart, getTotalCartAmount } =
     useContext(ShopContext);
   console.log(getTotalCartAmount());
   return (
@@ -17,7 +17,7 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {products.map((item) => {
+      {all_products.map((item) => {
         if (cartItems[item.id] > 0) {
           return (
             <div key={item.id}>
