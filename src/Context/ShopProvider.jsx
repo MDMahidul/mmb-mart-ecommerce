@@ -82,7 +82,7 @@ const ShopProvider = ({ children }) => {
   /* logout method */
   const logOut = () => {
     setLoading(true);
-    localStorage.removeItem("auth-token");
+    localStorage.removeItem("access-token");
     return signOut(auth);
   };
 
@@ -111,29 +111,29 @@ const ShopProvider = ({ children }) => {
             localStorage.setItem("access-token", data.data.token);
             setLoading(false);
           });
-      }else{
+      } else {
         localStorage.removeItem("access-token");
         setLoading(false);
       }
       console.log(currentUser);
     });
 
-    return ()=>{
+    return () => {
       return unsubscribe();
-    }
+    };
   }, []);
 
   /* add product to cart */
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     /* check if user logged in */
-    if (localStorage.getItem("auth-token")) {
+    if (localStorage.getItem("access-token")) {
       try {
         const res = axios.post(
           `${import.meta.env.VITE_API_URL}/addtocart`,
           { itemId: itemId },
           {
-            "auth-token": `${localStorage.getItem("auth-token")}`,
+            "access-token": `${localStorage.getItem("access-token")}`,
           }
         );
 

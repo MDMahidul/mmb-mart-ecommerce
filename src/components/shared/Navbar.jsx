@@ -8,24 +8,26 @@ import { MdMenu } from "react-icons/md";
 
 import ActiveLink from "../ActiveLink/ActiveLink";
 import { ShopContext } from "../../Context/ShopProvider";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
-  const { products, cartItems,user,logOut, theme, setTheme, userRole, setUserRole } =
-    useContext(ShopContext);
-  console.log(user);
+  const [userData] = useRole();
+  console.log(userData.role);
+  const {
+    products,
+    cartItems,
+    user,
+    logOut,
+    theme,
+    setTheme,
+  } = useContext(ShopContext);
+  
   const [isOpen, setIsOpen] = useState(false);
-  console.log(userRole);
+ 
   /* handle theme toggle */
   const handleThemeToggle = () => {
     setTheme((prevMode) => (prevMode === "light" ? "dark" : "light"));
     /* setIsRotated(!isRotated); */
-  };
-
-  /* handle singout */
-  const handleSignout = () => {
-    localStorage.removeItem("auth-token");
-    setUserRole(null);
-    setIsOpen(false);
   };
 
   return (
@@ -70,14 +72,14 @@ const Navbar = () => {
                   ) : (
                     <>
                       <span className="block text-sm text-gray-900 dark:text-white">
-                        Welcome to MMB Mart
+                        Welcome {userData.name}
                       </span>
                     </>
                   )}
                 </div>
                 <ul className="py-2" aria-labelledby="user-menu-button">
                   {user ? (
-                    userRole === "admin" ? (
+                    userData.role === "admin" ? (
                       <>
                         <li>
                           <Link
@@ -89,7 +91,7 @@ const Navbar = () => {
                         </li>
                         <li>
                           <button
-                            onClick={() => handleSignout()}
+                            onClick={() => logOut()}
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                           >
                             Sign out

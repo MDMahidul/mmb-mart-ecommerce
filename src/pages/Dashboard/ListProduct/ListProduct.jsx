@@ -4,15 +4,17 @@ import DashboardHeader from "../../../components/SectionHeader/DashboardHeader";
 import useProducts from "../../../hooks/useProducts";
 import { FaRegTrashAlt, FaRegEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ListProduct = () => {
   const [products, isLoading, refetch] = useProducts();
+  const [axiosSecure] = useAxiosSecure();
 
   /* delete product func */
  const handleDelete = async (id) => {
    try {
-     const response = await axios.delete(
-       `${import.meta.env.VITE_API_URL}/deleteproduct/${id}`
+     const response = await axiosSecure.delete(
+       `/deleteproduct/${id}`
      );
      refetch();
      toast.success("Product Deleted successfully");
@@ -30,7 +32,7 @@ const ListProduct = () => {
           {isLoading ? (
             <Loader height={"h-[50vh]"} />
           ) : (
-            <table className="w-full text-center text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table className="w-full text-center text-sm rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">

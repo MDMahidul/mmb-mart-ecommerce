@@ -3,12 +3,12 @@ import DashboardHeader from "../../../components/SectionHeader/DashboardHeader";
 import { useForm, Controller } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
 import CreatableSelect from "react-select/creatable";
-import fileUpIcon from "../../../assets/upload_area.svg";
-import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddProduct = () => {
   const [loading, setLoading] = useState(false);
+  const [axiosSecure] = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -60,44 +60,38 @@ const AddProduct = () => {
       description: data.description,
     };
     console.log(productInfo);
-    let responseData;
+    /* let responseData; */
     let product = productInfo;
 
-    let formData = new FormData();
-    formData.append("product", data.image[0]);
+    try {
+      let formData = new FormData();
+      formData.append("product", data.image[0]);
 
-    await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => (responseData = data));
-
-    if (responseData.success) {
-      product.image = responseData.image_url;
-      console.log(product);
-      /* send data to api to add in db */
-      await fetch(`${import.meta.env.VITE_API_URL}/addproduct`, {
-        method: "POST",
+      const responseUpload = await axiosSecure.post("/upload", formData, {
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
-        body: JSON.stringify(product),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          reset();
-          setUploadButtonText("Upload Image");
-          console.log(data);
-          setLoading(false);
-          toast.success("Product added succefully");
-        })
-        .catch((err) => {
-          setLoading(false);
-          toast.error(err.message);
-        });
+      });
+
+      if (responseUpload.data.success) {
+        productInfo.image = responseUpload.data.image_url;
+        console.log(productInfo);
+
+        /* send data to api to add in db */
+        const responseAddProduct = await axiosSecure.post(
+          "/addproduct",
+          productInfo
+        );
+        reset();
+        setUploadButtonText("Upload Image");
+        console.log(responseAddProduct.data);
+        setLoading(false);
+        toast.success("Product added successfully");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      toast.error(error.message);
     }
   };
   return (

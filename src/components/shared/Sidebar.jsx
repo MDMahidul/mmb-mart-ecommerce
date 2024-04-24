@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { MdShoppingCart } from "react-icons/md";
 import { HiMiniRectangleStack } from "react-icons/hi2";
@@ -6,9 +6,11 @@ import { HiHome, HiOutlineLogout } from "react-icons/hi";
 import { FaUsers } from "react-icons/fa";
 import logo from "../../assets/biglogo.png";
 import { Link, NavLink } from "react-router-dom";
+import { ShopContext } from "../../Context/ShopProvider";
 
 const Sidebar = () => {
   const [isActive, setIsActive] = useState(false);
+  const { logOut } = useContext(ShopContext);
 
   /* handle sidebar responsiveness */
   const handleSidebarToggle = () => {
@@ -112,7 +114,10 @@ const Sidebar = () => {
 
             <span className="mx-4 font-medium">Home Page</span>
           </NavLink>
-          <button className="w-full sidebar text-gray-600 dark:text-white">
+          <button
+            onClick={() => logOut()}
+            className="w-full sidebar text-gray-600 dark:text-white"
+          >
             <HiOutlineLogout className="w-5 h-5" />
 
             <span className="mx-4 font-medium">Logout</span>
