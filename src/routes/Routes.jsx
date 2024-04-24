@@ -14,11 +14,13 @@ import AddProduct from "../pages/Dashboard/Add/AddProduct";
 import ListProduct from "../pages/Dashboard/ListProduct/ListProduct";
 import ListUsers from "../pages/Dashboard/ListUsers/ListUsers";
 import Error from "../components/Error/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement:<Error/>,
+    errorElement: <Error />,
     children: [
       {
         index: true,
@@ -46,7 +48,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -60,23 +66,43 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
     children: [
       {
         path: "/dashboard",
-        element: <AddProduct />,
+        element: (
+          <AdminRoute>
+            <AddProduct />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/addproduct",
-        element: <AddProduct />,
+        element: (
+          <AdminRoute>
+            <AddProduct />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/listproduct",
-        element: <ListProduct />,
+        element: (
+          <AdminRoute>
+            <ListProduct />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/listuser",
-        element: <ListUsers />,
+        element: (
+          <AdminRoute>
+            <ListUsers />
+          </AdminRoute>
+        ),
       },
     ],
   },
