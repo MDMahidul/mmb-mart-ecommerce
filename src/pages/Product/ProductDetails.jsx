@@ -8,14 +8,30 @@ import Description from "../../components/Description/Description";
 import Reviews from "../../components/Reviews/Reviews";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loader from "../../components/Loader/Loader";
 
 const ProductDetails = () => {
-  const { products, removeToCart, addToCart } = useContext(ShopContext);
+  const {addToCart } = useContext(ShopContext);
   const { itemName } = useParams();
-  const product = products.find((item) => item.name === itemName);
-  /* const { itemId } = useParams();
-  const product = products.find((item) => item.id === parseInt(itemId)); */
 
+  /* fetch poduct details from api */
+  const { data: product=[], isLoading, isError } = useQuery({
+    queryKey:['productDetails'],
+    queryFn:async()=>{
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/product/details/${itemName}`
+        );
+        return res.data;
+      } catch (error) {
+        throw new Error("Failed to fetch category products");
+      }
+    }
+  });
+
+console.log(product);
   const {
     id,
     name,
@@ -37,6 +53,7 @@ const ProductDetails = () => {
       <LoadPageTop />
       <Container>
         <Breadcrum product={product} />
+        {isLoading && <Loader height={'h-screen'}/>}
         <div className="flex flex-col md:flex-row gap-5 md:gap-0">
           <div className="md:w-1/2   flex  lg:flex-col-reverse xl:flex-row gap-3">
             <div className="flex flex-col lg:flex-row xl:flex-col gap-[10px] md:gap-[15px]">
@@ -63,7 +80,7 @@ const ProductDetails = () => {
             </div>
             <div>
               <img
-                className="w-[450px] md:w-[500px] lg:w-[500px] xl:w-[710px]"
+                className="w-[450px] md:w-[500px] lg:w-[500px] xl:w-[700px]"
                 src={image}
                 alt=""
               />

@@ -8,7 +8,7 @@ const Product = ({item}) => {
   const {id,name,image,new_price,old_price,ratings} = item;
     return (
       <Link to={`/product/${name}`} onClick={()=>{window.scrollTo(0,0)}}>
-        <div className="w-full max-w-sm bg-white border border-gray-100 rounded-lg hover:shadow-lg dark:bg-gray-500 dark:border-gray-500 relative group">
+        <div className="w-full max-w-sm bg-white border border-gray-100 rounded-lg hover:shadow-lg dark:bg-gray-500 dark:border-gray-400 relative group">
           <div className="relative overflow-hidden rounded-t-lg">
             <img
               className="rounded-t-lg product_card_img"

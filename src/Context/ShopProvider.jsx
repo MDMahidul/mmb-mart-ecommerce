@@ -48,7 +48,7 @@ const ShopProvider = ({ children }) => {
   }, [theme]);
 
   /* set user role */
-  useEffect(() => {
+/*   useEffect(() => {
     const fetchUser = async () => {
       if (user) {
         const response = await axios.get(
@@ -59,7 +59,7 @@ const ShopProvider = ({ children }) => {
       }
     };
     fetchUser();
-  }, [user]);
+  }, [user]); */
 
   /* create user using firebase */
   const createUser = (email, password) => {
@@ -129,7 +129,7 @@ const ShopProvider = ({ children }) => {
     /* check if user logged in */
     if (localStorage.getItem("access-token")) {
       try {
-        const res = axios.post(
+        axios.post(
           `${import.meta.env.VITE_API_URL}/addtocart`,
           { itemId: itemId },
           {

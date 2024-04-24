@@ -122,7 +122,10 @@ const Login = () => {
           </div>
           <div className="relative">
             <div className="flex justify-between">
-              <label htmlFor="password" className="text-sm mb-2">
+              <label
+                htmlFor="password"
+                className="text-sm mb-2 text-gray-900 dark:text-white"
+              >
                 Password
               </label>
             </div>
@@ -177,7 +180,7 @@ const Login = () => {
         >
           <FcGoogle size={25} />
 
-          <p>Continue with Google</p>
+          <p className="text-gray-900 dark:text-white">Continue with Google</p>
         </div>
       </div>
     </div>

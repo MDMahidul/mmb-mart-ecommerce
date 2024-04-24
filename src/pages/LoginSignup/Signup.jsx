@@ -220,7 +220,7 @@ const SignUp = () => {
         >
           <FcGoogle size={25} />
 
-          <p>Continue with Google</p>
+          <p className="text-gray-900 dark:text-white">Continue with Google</p>
         </div>
       </div>
     </div>

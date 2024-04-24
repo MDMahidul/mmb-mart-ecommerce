@@ -1,5 +1,3 @@
-import React, { useContext } from "react";
-import { ShopContext } from "../../Context/ShopProvider";
 import Carousel from "../../components/Carousel/Carousel";
 import Container from "../../components/Container";
 import saree from "../../assets/carousel/women/saree.webp";

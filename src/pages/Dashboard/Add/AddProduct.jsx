@@ -284,7 +284,7 @@ const AddProduct = () => {
             {loading ? (
               <ImSpinner9 className="m-auto animate-spin" size={24} />
             ) : (
-              "Add Course"
+              "Add Product"
             )}
           </button>
         </form>

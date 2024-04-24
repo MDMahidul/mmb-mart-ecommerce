@@ -1,32 +1,15 @@
-import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
 import DashboardHeader from "../../../components/SectionHeader/DashboardHeader";
 import useProducts from "../../../hooks/useProducts";
-import { FaRegTrashAlt, FaRegEdit } from "react-icons/fa";
-import toast from "react-hot-toast";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import TableRow from "./TableRow";
 
 const ListProduct = () => {
   const [products, isLoading, refetch] = useProducts();
-  const [axiosSecure] = useAxiosSecure();
-
-  /* delete product func */
- const handleDelete = async (id) => {
-   try {
-     const response = await axiosSecure.delete(
-       `/deleteproduct/${id}`
-     );
-     refetch();
-     toast.success("Product Deleted successfully");
-   } catch (error) {
-     toast.error(error.message);
-   }
- };
 
   return (
     <>
       <DashboardHeader title={"All Products List"} />
-        <h2 className="my-5 font-medium">Total Products: {products.length}</h2>
+      <h2 className="my-5 font-medium">Total Products: {products.length}</h2>
       <div className="mb-8">
         <div className="relative overflow-x-auto  sm:rounded-lg">
           {isLoading ? (
@@ -60,40 +43,11 @@ const ListProduct = () => {
               </thead>
               <tbody>
                 {products.map((product) => (
-                  <tr
-                    className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                  <TableRow
                     key={product.id}
-                  >
-                    <th>
-                      <div className="flex justify-center items-center py-1">
-                        <img
-                          className="w-9 rounded-lg"
-                          src={product.image}
-                          alt=""
-                        />
-                      </div>
-                    </th>
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {product.name}
-                    </th>
-                    <td className="px-6 py-4">{product.category}</td>
-                    <td className="px-6 py-4">{product.sub_category}</td>
-                    <td className="px-6 py-4">${product.old_price}</td>
-                    <td className="px-6 py-4">${product.new_price}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-center items-center gap-x-4">
-                        <button onClick={()=>handleDelete(product.id)}>
-                          <FaRegTrashAlt className="w-5 h-5 hover:text-cyan-500" />
-                        </button>
-                        <button>
-                          <FaRegEdit className="w-5 h-5 hover:text-cyan-500" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                    refetch={refetch}
+                    product={product}
+                  />
                 ))}
               </tbody>
             </table>
