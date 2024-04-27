@@ -6,20 +6,30 @@ import { Rating } from "@smastrom/react-rating";
 import Container from "../../components/Container";
 import Description from "../../components/Description/Description";
 import Reviews from "../../components/Reviews/Reviews";
-import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
+import toast from "react-hot-toast";
+import useCategory from "../../hooks/useCategory";
+import Product from "../../components/Product/Product";
+import SectionHeader from "../../components/SectionHeader/SectionHeader";
+import useRole from "../../hooks/useRole";
 
 const ProductDetails = () => {
-  const {addToCart } = useContext(ShopContext);
+  const { user, cartItems, setCartItems } = useContext(ShopContext);
   const { itemName } = useParams();
-
+  const [userData]=useRole();
+  
+console.log(userData);
   /* fetch poduct details from api */
-  const { data: product=[], isLoading, isError } = useQuery({
-    queryKey:['productDetails'],
-    queryFn:async()=>{
+  const {
+    data: product = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["productDetails"],
+    queryFn: async () => {
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/product/details/${itemName}`
@@ -28,20 +38,46 @@ const ProductDetails = () => {
       } catch (error) {
         throw new Error("Failed to fetch category products");
       }
-    }
+    },
   });
 
-console.log(product);
+  /* add product to cart */
+  const addToCart = (itemId) => {
+    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    const accessToken = localStorage.getItem("access-token");
+    /* check if user logged in */
+    if (user && accessToken) {
+      fetch(`${import.meta.env.VITE_API_URL}/addtocart`, {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "access-token": accessToken,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ itemId: itemId }),
+      })
+        .then((response) => response.json() )
+        .then((data) => {
+          console.log(data);
+          toast.success("Item added to cart!!!");
+        });
+    } else {
+      toast.error("Please Login first!!!");
+    }
+  };
+
+  //console.log(product);
   const {
     id,
     name,
     image,
-    rating,
+    ratings,
     old_price,
     new_price,
     category,
     sub_category,
   } = product;
+  const [categoriesWiseProducts] = useCategory(category);
   const [activeComponent, setActiveComponent] = useState("Description");
 
   // Function to handle component toggle
@@ -53,7 +89,7 @@ console.log(product);
       <LoadPageTop />
       <Container>
         <Breadcrum product={product} />
-        {isLoading && <Loader height={'h-screen'}/>}
+        {isLoading && <Loader height={"h-screen"} />}
         <div className="flex flex-col md:flex-row gap-5 md:gap-0">
           <div className="md:w-1/2   flex  lg:flex-col-reverse xl:flex-row gap-3">
             <div className="flex flex-col lg:flex-row xl:flex-col gap-[10px] md:gap-[15px]">
@@ -93,11 +129,11 @@ console.log(product);
             <div className="flex items-center my-3 ">
               <Rating
                 style={{ maxWidth: 100 }}
-                value={Math.round(rating || 0)}
+                value={Math.round(ratings || 0)}
                 readOnly
               />
               <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-                {rating}
+                {ratings}
               </span>
             </div>
             <div className="flex gap-8 text-lg md:text-2xl my-2 lg:my-4 xl:my-8 font-semibold md:font-bold">
@@ -128,7 +164,12 @@ console.log(product);
                 onClick={() => {
                   addToCart(id);
                 }}
-                className="primary-btn w-full"
+                className={`${
+                  userData?.role === "admin"
+                    ? "bg-gray-500 px-5 py-2.5 md:py-3 w-full text-white text-sm md:text-base rounded-lg font-medium"
+                    : "primary-btn w-full"
+                }`}
+                disabled={userData?.role === "admin"}
               >
                 ADD TO CART
               </button>
@@ -161,8 +202,11 @@ console.log(product);
           </button>
         </div>
         {activeComponent === "Description" ? <Description /> : <Reviews />}
-        <div>
-          <RelatedProducts />
+        <SectionHeader heading={"Related Products"} />
+        <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5">
+          {categoriesWiseProducts.slice(0, 4).map((item) => (
+            <Product key={item.id} item={item} />
+          ))}
         </div>
       </Container>
     </div>

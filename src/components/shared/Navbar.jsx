@@ -12,16 +12,10 @@ import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const [userData] = useRole();
-  console.log(userData.role);
-  const {
-    products,
-    cartItems,
-    user,
-    logOut,
-    theme,
-    setTheme,
-  } = useContext(ShopContext);
-  
+  //console.log(userData.role);
+  const { getTotalCartItems,products, cartItems, user, logOut, theme, setTheme } =
+    useContext(ShopContext);
+  //console.log(cartItems);
   const [isOpen, setIsOpen] = useState(false);
  
   /* handle theme toggle */
@@ -41,7 +35,7 @@ const Navbar = () => {
             <Link to="/cart" className="relative mt-2 md:mt-1">
               <BsCart3 className="w-6 h-6 dark:text-white" />
               <span className="absolute -top-1.5 -right-2 bg-primary rounded-full text-xs px-1 text-white">
-                0
+                {getTotalCartItems()}
               </span>
             </Link>
             <button onClick={handleThemeToggle}>

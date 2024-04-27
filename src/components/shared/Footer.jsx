@@ -19,7 +19,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
   return (
     <div>
-      <footer className=" py-14  dark:bg-gray-600 text-base-content">
+      <footer className=" py-14 bg-amber-100 dark:bg-gray-600 text-base-content">
         <Container>
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-10 md:gap-0">
             <aside className="md:w-1/4">
@@ -107,8 +107,10 @@ const Footer = () => {
           </div>
         </Container>
       </footer>
-      <div className="text-center p-6  dark:bg-gray-600 text-base-content border-t border-slate-300">
-        <p className="dark:text-white">Copyright © {year} - All right reserved</p>
+      <div className="text-center p-6 bg-amber-100 dark:bg-gray-600 text-base-content border-t border-slate-300">
+        <p className="dark:text-white">
+          Copyright © {year} - All right reserved
+        </p>
       </div>
     </div>
   );

@@ -1,11 +1,40 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../Context/ShopProvider";
 import { FaRegTrashAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const CartItems = () => {
-  const { products, cartItems, removeFromCart, getTotalCartAmount } =
+  const { user, products, cartItems, setCartItems, getTotalCartAmount } =
     useContext(ShopContext);
-  console.log(getTotalCartAmount());
+
+  /* remove product from cart */
+  const removeFromCart = (itemId) => {
+    const accessToken = localStorage.getItem("access-token");
+    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    if (user && accessToken) {
+      console.log("clicked");
+      fetch(`${import.meta.env.VITE_API_URL}/removefromcart`, {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "access-token": accessToken,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ itemId: itemId }),
+      })
+        .then((response) => {
+          response.json();
+          console.log("clicked2");
+        })
+        .then((data) => {
+          console.log(data);
+          toast.success("Item removed from cart!!!");
+        });
+    } else {
+      toast.error("Please Login first!!!");
+    }
+  };
+
   return (
     <div className="md:my-10">
       <div className="hidden md:grid grid-cols-lg xl:grid-cols-custom items-center  gap-5 xl:gap-[75px] py-5 xl:text-lg font-semibold text-gray-600 dark:text-white">

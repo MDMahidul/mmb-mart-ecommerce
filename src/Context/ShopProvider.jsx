@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 //import products from "../assets/data/all_product";
 import useProducts from "../hooks/useProducts";
 import axios from "axios";
-import toast from "react-hot-toast";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -34,7 +33,6 @@ const ShopProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState(null);
 
   /* set theme */
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -46,20 +44,6 @@ const ShopProvider = ({ children }) => {
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  /* set user role */
-/*   useEffect(() => {
-    const fetchUser = async () => {
-      if (user) {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/user/${user.email}`
-        );
-        const user = response.data;
-        setUserRole(user?.role);
-      }
-    };
-    fetchUser();
-  }, [user]); */
 
   /* create user using firebase */
   const createUser = (email, password) => {
@@ -98,7 +82,6 @@ const ShopProvider = ({ children }) => {
     });
   };
 
-  /* set current user */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -109,10 +92,14 @@ const ShopProvider = ({ children }) => {
           })
           .then((data) => {
             localStorage.setItem("access-token", data.data.token);
+            // Fetch cart items when user signs in
+            fetchCartItems();
             setLoading(false);
           });
       } else {
         localStorage.removeItem("access-token");
+        //empty cart data if no user exist
+        setCartItems({});
         setLoading(false);
       }
       console.log(currentUser);
@@ -123,18 +110,37 @@ const ShopProvider = ({ children }) => {
     };
   }, []);
 
+  // Function to fetch cart items
+  const fetchCartItems = () => {
+    if (localStorage.getItem("access-token")) {
+      fetch(`${import.meta.env.VITE_API_URL}/getcart`, {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "access-token": localStorage.getItem("access-token"),
+          "Content-Type": "application/json",
+        },
+        body: "",
+      })
+        .then((res) => res.json())
+        .then((data) => setCartItems(data));
+    }
+  };
+
   /* add product to cart */
-  const addToCart = (itemId) => {
+  /*   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    /* check if user logged in */
+    
     if (localStorage.getItem("access-token")) {
       try {
         axios.post(
           `${import.meta.env.VITE_API_URL}/addtocart`,
           { itemId: itemId },
           {
-            "access-token": `${localStorage.getItem("access-token")}`,
-          }
+          headers: {
+            "access-token": localStorage.getItem("access-token"),
+          },
+        }
         );
 
         toast.success("Item added to cart");
@@ -143,17 +149,13 @@ const ShopProvider = ({ children }) => {
         toast.error(error.message);
       }
     }
-  };
-
-  /* remove product from cart */
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-  };
+  }; */
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
+        //calculate total item amount
         let itemInfo = products.find(
           (product) => product.id === parseInt(item)
         );
@@ -161,7 +163,17 @@ const ShopProvider = ({ children }) => {
         console.log(totalAmount);
       }
     }
-    return totalAmount; // Move return statement here
+    return totalAmount; 
+  };
+
+  const getTotalCartItems = () => {
+    let totalItem = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        totalItem += cartItems[item];
+      }
+    }
+    return totalItem;
   };
 
   const shopInfo = {
@@ -173,14 +185,13 @@ const ShopProvider = ({ children }) => {
     googleSignIn,
     logOut,
     products,
-    cartItems,
-    addToCart,
-    removeFromCart,
     getTotalCartAmount,
+    getTotalCartItems,
     resetPassword,
     theme,
+    setCartItems,
+    cartItems,
     setTheme,
-    userRole,
     updateUserProfile,
   };
 
