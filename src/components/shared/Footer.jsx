@@ -77,16 +77,16 @@ const Footer = () => {
                 Quick Links
               </header>
               <div className="flex flex-col space-y-3 text-base dark:text-white">
-                <Link className="link link-hover hover:text-amber-500">
+                <Link to="/" className="link link-hover hover:text-amber-500">
                   Shop
                 </Link>
-                <Link className="link link-hover hover:text-amber-500">
+                <Link to="/men" className="link link-hover hover:text-amber-500">
                   Men
                 </Link>
-                <Link className="link link-hover hover:text-amber-500">
+                <Link to="/women" className="link link-hover hover:text-amber-500">
                   Women
                 </Link>
-                <Link className="link link-hover hover:text-amber-500">
+                <Link to="/kids" className="link link-hover hover:text-amber-500">
                   Kids
                 </Link>
               </div>

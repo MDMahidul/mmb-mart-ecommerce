@@ -29,7 +29,7 @@ const Carousel = ({images}) => {
           modules={[Autoplay, EffectCoverflow]}
         >
           {images.map((image) => (
-            <SwiperSlide key={image.id}>
+            <SwiperSlide className="swiper-slide1" key={image.id}>
               <img src={image.src} alt="cricket" />
             </SwiperSlide>
           ))}

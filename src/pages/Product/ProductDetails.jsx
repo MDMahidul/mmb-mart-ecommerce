@@ -123,7 +123,7 @@ console.log(userData);
             </div>
           </div>
           <div className="md:w-1/2  flex flex-col md:mx-8 lg:mx-14 xl:mx-15">
-            <h1 className="text-xl md:text-2xl lg:text-3xl xl:4xl font-semibold md:font-bold text-gray-700 dark:text-white">
+            <h1 className="text-xl md:text-2xl lg:text-3xl xl:4xl font-medium md:font-bold text-gray-700 dark:text-white">
               {name}
             </h1>
             <div className="flex items-center my-3 ">
@@ -194,7 +194,7 @@ console.log(userData);
           </button>
           <button
             onClick={() => handleComponentToggle("Reviews")}
-            className={`border px-9 md:px-10 py-3 font-semibold ${
+            className={`border px-9 md:px-10 py-3 font-semibold  ${
               activeComponent === "Reviews" ? "bg-gray-200" : ""
             }`}
           >

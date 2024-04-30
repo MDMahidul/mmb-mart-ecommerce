@@ -7,6 +7,7 @@ import categories from "../../../assets/data/categories";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "./Categories.css";
 import SectionHeader from "../../../components/SectionHeader/SectionHeader";
 import { Link } from "react-router-dom";
 
@@ -14,15 +15,22 @@ export default function Categories() {
   const [swiperRef, setSwiperRef] = useState(null);
  
   return (
-    <div className="dark:bg-gray-600">
+    <div className="dark:bg-gray-600 pb-4 md:pb-10">
       <Container>
         <SectionHeader heading={"Categories"} />
         <Swiper
           onSwiper={setSwiperRef}
           slidesPerView={2}
           centeredSlides={true}
-          spaceBetween={50}
           breakpoints={{
+            320: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            480: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
             640: {
               slidesPerView: 3,
               spaceBetween: 20,
@@ -52,10 +60,7 @@ export default function Categories() {
               key={category.sub_category}
             >
               <Link to={`/category/${category.sub_category}`}>
-                <div
-                  className="-mt-14 flex justify-center items-center flex-col gap-4 mx-auto"
-                  style={{ width: "77%", height: "80%" }} // Inline styles for div
-                >
+                <div className="category-div  flex justify-center items-center flex-col gap-4 mx-auto w-24 md:w-32">
                   <img
                     className="img !border-none"
                     src={category.image}
@@ -65,7 +70,7 @@ export default function Categories() {
                       height: "31%",
                     }} // Inline styles for img
                   />
-                  <p>{category.sub_category}</p>
+                  <p className="text-base md:text-lg">{category.sub_category}</p>
                 </div>
               </Link>
             </SwiperSlide>

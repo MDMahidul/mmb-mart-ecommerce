@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "node_modules/flowbite-react/lib/esm/**/*.js",
+  ],
   darkMode: "class",
   theme: {
     fontFamily: {
@@ -16,9 +20,9 @@ export default {
       gridTemplateColumns: {
         custom: "0.5fr 2fr 1fr 1fr 1fr 1fr",
         lg: "0.5fr 3fr 0.5fr 0.5fr 0.5fr 0.5fr",
-        md:"0.5fr 3fr 0.5fr"
+        md: "0.5fr 3fr 0.5fr",
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };

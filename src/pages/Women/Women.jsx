@@ -11,8 +11,13 @@ import Product from "../../components/Product/Product";
 import LoadPageTop from "../../components/LoadPageTop/LoadPageTop";
 import useCategory from "../../hooks/useCategory";
 import Loader from "../../components/Loader/Loader";
+import { useState } from "react";
+import useProducts from "../../hooks/useProducts";
 
 const Women = () => {
+  const [products] = useProducts();
+  const [showAll, setShowAll] = useState(false);
+
   const images = [
     { id: 1, src: saree },
     { id: 2, src: kurta },
@@ -24,6 +29,11 @@ const Women = () => {
 
   /* use hook to get data from db  */
   const [categoriesWiseProducts, isLoading, isError] = useCategory("women");
+  
+  /* show all toggle */
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">
@@ -31,13 +41,13 @@ const Women = () => {
       <Container>
         <div className=" flex flex-col gap-y-5 md:flex-row justify-center items-center py-10">
           <div className="md:w-1/2  dark:text-white text-center ">
-            <p className="md:text-lg py-2 dark:text-white text-red-500 font-semibold">
+            <p className="text-sm md:text-lg py-2 dark:text-white text-red-500 font-semibold">
               Check Out New Collection{" "}
             </p>
-            <h2 className="md:text-6xl text-2xl font-semibold ">
+            <h2 className="text-xl sm:text-2xl md:text-6xl  font-semibold ">
               Elevate Your Style with our Premier Women's Collection
             </h2>
-            <p className="mt-5 text-lg md:text-2xl mb-2 md:mb-0 md:py-4 dark:text-white text-amber-500 font-semibold">
+            <p className="mt-5 text-base md:text-2xl mb-2 md:mb-0 md:py-4 dark:text-white text-amber-500 font-semibold md:font-semibold">
               Exclusive Collections
             </p>
 
@@ -52,8 +62,9 @@ const Women = () => {
         <div>
           <SectionHeader heading={"Women"} />
           <div className="flex justify-between mb-5">
-            <p className="text-sm md:text-base md:font-semibold">
-              Showing 1-12 out of 36 products
+            <p className="text-sm md:text-base md:font-semibold dark:text-white">
+              Showing {categoriesWiseProducts.length} out of {products.length}{" "}
+              products
             </p>
             <div>
               <form className="max-w-sm">
@@ -62,7 +73,7 @@ const Women = () => {
                 </label>
                 <select
                   id="underline_select"
-                  className="block  px-0 w-sm text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                  className="block w-sm text-sm text-gray-500 bg-transparent dark:bg-gray-500 border-0 border-b-2 border-gray-200 appearance-none dark:text-white dark:border-white focus:outline-none focus:ring-0 focus:border-gray-200 peer px-2"
                 >
                   <option selected="">Sort By</option>
                   <option value="shirt">Shirt</option>
@@ -76,27 +87,29 @@ const Women = () => {
             </div>
           </div>
           {isError && (
-            <p className="text-center text-gray-400">Something went wrong!</p>
+            <p className="text-center text-gray-400 my-4">
+              Something went wrong!
+            </p>
           )}
           {isLoading ? (
             <Loader height={"h-[40vh]"} />
           ) : (
             <>
               <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
-                {categoriesWiseProducts.map((item) => (
-                  <Product key={item.id} item={item} />
-                ))}
+                {showAll
+                  ? categoriesWiseProducts.map((item) => (
+                      <Product key={item.id} item={item} />
+                    ))
+                  : categoriesWiseProducts
+                      .slice(0, 8)
+                      .map((item) => <Product key={item.id} item={item} />)}
               </div>
             </>
           )}
         </div>
-        {categoriesWiseProducts.length <= 0 ? (
-          <p className="text-center text-gray-400 my-8">
-            Something went wrong!
-          </p>
-        ) : (
+        {categoriesWiseProducts.length > 6 && !showAll && (
           <div className="text-center pb-5 md:pb-10">
-            <button type="btn" className="primary-btn">
+            <button onClick={toggleShowAll} type="btn" className="primary-btn">
               Explore More
             </button>
           </div>

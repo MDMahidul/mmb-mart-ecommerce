@@ -69,7 +69,7 @@ const CartItems = () => {
       })}
       <div className="flex flex-col xl:flex-row gap-10 my-14 xl:my-24">
         <div className="flex flex-1 flex-col xl:mr-48 gap-5 xl:gap-10 text-gray-700 dark:text-white">
-          <h1 className="text-2xl font-semibold">Cart Total:</h1>
+          <h1 className="text-lg md:text-2xl font-semibold">Cart Total:</h1>
           <div>
             <div className="flex justify-between py-3.5">
               <p>Subtotal</p>
@@ -81,7 +81,7 @@ const CartItems = () => {
               <p>Free</p>
             </div>
             <hr />
-            <div className="flex justify-between py-3.5 text-xl font-semibold">
+            <div className="flex justify-between py-3.5 font-semibold text-lg md:text-xl">
               <h3 className="">Total</h3>
               <h3>${getTotalCartAmount()}</h3>
             </div>
@@ -92,15 +92,15 @@ const CartItems = () => {
           <p className="text-gray-700 dark:text-white">
             If you have a promo code, Enter it here
           </p>
-          <div className="h-14  mt-3.5 flex items-center">
+          <div className="h-14 mx-auto w-11/12 md:w-full mt-3.5 flex items-center">
             <input
-              className="border-none outline-none bg-gray-200 max-w-[330px] h-14 items-center focus:ring-transparent px-5 md:px-10"
+              className="border-none outline-none bg-gray-200 w-56 md:w-72 h-14 items-center focus:ring-transparent px-5 md:px-10"
               type="text"
               name=""
               id=""
               placeholder="promocode"
             />
-            <button className="w-[200px] h-14 bg-black text-white">
+            <button className="w-32 md:w-[200px] h-14 bg-black text-white">
               Submit
             </button>
           </div>

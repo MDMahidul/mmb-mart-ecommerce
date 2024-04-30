@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Container from "../Container";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/biglogo.png";
@@ -31,18 +31,22 @@ const Navbar = () => {
           <Link href="/">
             <img src={Logo} className="w-32 md:w-56" alt="Flowbite Logo" />
           </Link>
-          <div className="flex md:gap-7 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <Link to="/cart" className="relative mt-2 md:mt-1">
-              <BsCart3 className="w-6 h-6 dark:text-white" />
-              <span className="absolute -top-1.5 -right-2 bg-primary rounded-full text-xs px-1 text-white">
+          <div className="flex md:gap-7 md:order-2 space-x-4 md:space-x-0 rtl:space-x-reverse">
+            <Link to="/cart" className="relative mt-3 md:mt-1">
+              <BsCart3 className="w-5 h-5 md:w-6 md:h-6 dark:text-white" />
+              <span className="absolute -top-1.5 -right-2 bg-primary rounded-full font-medium text-[10px] px-1.5 py-[1px] text-white">
                 {getTotalCartItems()}
               </span>
             </Link>
             <button onClick={handleThemeToggle}>
               {theme == "light" ? (
-                <FiMoon className={`w-6 h-6 dark:text-white animate-rotate`} />
+                <FiMoon
+                  className={`w-5 h-5 md:w-6 md:h-6 dark:text-white animate-rotate`}
+                />
               ) : (
-                <FiSun className={`w-6 h-6 dark:text-white animate-rotate`} />
+                <FiSun
+                  className={`w-5 h-5 md:w-6 md:h-6 dark:text-white animate-rotate`}
+                />
               )}
             </button>
             <div
@@ -50,7 +54,7 @@ const Navbar = () => {
               className=" flex flex-row items-center gap-3 rounded-full cursor-pointer transition"
             >
               {/* <span className="sr-only">Open user menu</span> */}
-              <FiUser className="w-6 h-6 dark:text-white md:mt-1" />
+              <FiUser className="w-5 h-5 md:w-6 md:h-6 dark:text-white md:mt-1" />
             </div>
             {/* Dropdown menu */}
             {isOpen && (
@@ -136,10 +140,10 @@ const Navbar = () => {
               </div>
             )}
 
-            <button
+            <button 
               data-collapse-toggle="navbar-cta"
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-700 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-cta"
               aria-expanded="false"
             >

@@ -21,7 +21,7 @@ const NewCollection = () => {
   });
 
   return (
-    <div className="dark:bg-gray-600 pb-10">
+    <div className="dark:bg-gray-500 pb-10">
       <Container>
         <SectionHeader heading={"New Collection"} />
          {isError && <p className='text-center text-gray-400'>Something went wrong!</p>}

@@ -10,7 +10,7 @@ const TypingEffect = ({ words }) => {
   });
   return (
     <div>
-      <div className="md:text-3xl text-red-500 text-lg font-semibold">
+      <div className="text-base sm:text-lg md:text-3xl text-red-500  font-semibold">
         <span>{texts}</span>
         <Cursor cursorStyle="." cursorColor="transparent" />
       </div>
