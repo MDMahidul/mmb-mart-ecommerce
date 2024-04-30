@@ -19,6 +19,7 @@ import useProducts from "../../hooks/useProducts";
 const Kids = () => {
   const [products] = useProducts();
   const [showAll, setShowAll] = useState(false);
+  const [selectCategory, setSelectCategory] = useState("");
 
   const images = [
     { id: 1, src: Panjabi },
@@ -37,6 +38,18 @@ const Kids = () => {
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+
+  /* handle data filter */
+  const handleCategoryChange = (e) => {
+    setSelectCategory(e.target.value);
+  };
+
+  /* filtered data */
+  const filteredProducts = selectCategory
+    ? categoriesWiseProducts.filter(
+        (product) => product.sub_category === selectCategory
+      )
+    : categoriesWiseProducts;
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">
@@ -66,26 +79,36 @@ const Kids = () => {
           <SectionHeader heading={"Kids"} />
           <div className="flex justify-between mb-5">
             <p className="text-sm md:text-base md:font-semibold dark:text-white">
-              Showing {categoriesWiseProducts.length} out of {products.length} products
+              Showing {categoriesWiseProducts.length} out of {products.length}{" "}
+              products
             </p>
             <div className="flex items-center gap-4 ">
-              <form className="max-w-sm ">
-                <label htmlFor="underline_select" className="sr-only">
-                  Underline select
-                </label>
-                <select
-                  id="underline_select"
-                  className="block w-sm text-sm text-gray-500 bg-transparent dark:bg-gray-500 border-0 border-b-2 border-gray-200 appearance-none dark:text-white dark:border-white focus:outline-none focus:ring-0 focus:border-gray-200 peer px-2"
-                >
-                  <option selected="">Sort By</option>
-                  <option value="shirt">Shirt</option>
-                  <option value="tshirt">T-Shirt</option>
-                  <option value="tops">Tops</option>
-                  <option value="panjabi">Panjabi</option>
-                  <option value="frock">Frock</option>
-                  <option value="jacket">Jacket</option>
-                  <option value="hoodie">Hoodie</option>
-                </select>
+              <form className="max-w-sm " onChange={handleCategoryChange}>
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor="underline_select"
+                    className="text-sm md:text-base md:font-semibold dark:text-white"
+                  >
+                    Sort by
+                  </label>
+                  <select
+                    id="underline_select"
+                    className="block w-sm text-sm font-medium text-gray-600 bg-transparent dark:bg-gray-500 border-0 border-b-2 border-gray-200 appearance-none dark:text-white dark:border-white focus:outline-none focus:ring-0 focus:border-gray-200 peer px-2"
+                  >
+                    <option value="" selected="">
+                      All
+                    </option>
+                    <option value="shirt">Shirt</option>
+                    <option value="tshirt">T-Shirt</option>
+                    <option value="tops">Tops</option>
+                    <option value="pant">Pant</option>
+                    <option value="panjabi">Panjabi</option>
+                    <option value="kurta">Kurta</option>
+                    <option value="frock">Frock</option>
+                    <option value="jacket">Jacket</option>
+                    <option value="hoodie">Hoodie</option>
+                  </select>
+                </div>
               </form>
             </div>
           </div>
@@ -98,19 +121,25 @@ const Kids = () => {
             <Loader height={"h-[40vh]"} />
           ) : (
             <>
-              <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
-                {showAll
-                  ? categoriesWiseProducts.map((item) => (
-                      <Product key={item.id} item={item} />
-                    ))
-                  : categoriesWiseProducts
-                      .slice(0, 8)
-                      .map((item) => <Product key={item.id} item={item} />)}
-              </div>
+              {filteredProducts.length === 0 ? (
+                <div className="text-center text-gray-400 my-8">
+                  No item found!
+                </div>
+              ) : (
+                <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5 pb-10 md:pb-12">
+                  {showAll
+                    ? filteredProducts.map((item) => (
+                        <Product key={item.id} item={item} />
+                      ))
+                    : filteredProducts
+                        .slice(0, 8)
+                        .map((item) => <Product key={item.id} item={item} />)}
+                </div>
+              )}
             </>
           )}
         </div>
-        {categoriesWiseProducts.length > 6 && !showAll && (
+        {filteredProducts.length > 6 && !showAll && (
           <div className="text-center pb-5 md:pb-10">
             <button onClick={toggleShowAll} type="btn" className="primary-btn">
               Explore More

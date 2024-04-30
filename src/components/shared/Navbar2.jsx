@@ -114,7 +114,7 @@ const Navbar2 = () => {
           <ActiveLink to="/men">Men</ActiveLink>
           <ActiveLink to="/women">Women</ActiveLink>
           <ActiveLink to="/kids">Kids</ActiveLink>
-          <Link to="/login" className="md:hidden">
+          <Link to="/login" className="md:hidden ms-3 mt-1.5">
             Login
           </Link>
         </Navbar.Collapse>
