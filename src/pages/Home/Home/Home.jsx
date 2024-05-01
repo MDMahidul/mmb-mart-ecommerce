@@ -7,10 +7,12 @@ import NewCollection from '../NewCollection/NewCollection';
 import NewsLetter from '../NewsLetter/NewsLetter';
 import LoadPageTop from '../../../components/LoadPageTop/LoadPageTop';
 import Categories from '../Categories/Categories';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
     return (
         <div>
+            <Helmet><title>Home</title></Helmet>
             <LoadPageTop/>
             <Banner/>
             <Categories/>

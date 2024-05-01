@@ -7,6 +7,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ImSpinner9 } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import { ShopContext } from "../../Context/ShopProvider";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
   const [disabled, setDisabled] = useState(true);
@@ -98,6 +99,9 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-slate-200 dark:bg-slate-600">
+      <Helmet>
+        <title>Sign up</title>
+      </Helmet>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form
           className="space-y-4"

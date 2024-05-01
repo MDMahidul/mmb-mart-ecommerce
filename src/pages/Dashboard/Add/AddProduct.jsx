@@ -5,6 +5,7 @@ import { ImSpinner9 } from "react-icons/im";
 import CreatableSelect from "react-select/creatable";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const AddProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -96,6 +97,9 @@ const AddProduct = () => {
   };
   return (
     <div className="">
+      <Helmet>
+        <title>Add Product</title>
+      </Helmet>
       <DashboardHeader title={"Add Product"} />
       <div className="my-8 md:w-9/12 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>

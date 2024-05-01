@@ -15,6 +15,7 @@ import useCategory from "../../hooks/useCategory";
 import Loader from "../../components/Loader/Loader";
 import { useParams } from "react-router-dom";
 import useProducts from "../../hooks/useProducts";
+import { Helmet } from "react-helmet-async";
 
 const Kids = () => {
   const [products] = useProducts();
@@ -53,6 +54,9 @@ const Kids = () => {
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">
+      <Helmet>
+        <title>Kids</title>
+      </Helmet>
       <LoadPageTop />
       <Container>
         <div className=" flex flex-col gap-y-5 md:flex-row justify-center items-center py-10">

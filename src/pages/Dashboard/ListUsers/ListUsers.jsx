@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import DashboardHeader from "../../../components/SectionHeader/DashboardHeader";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loader from "../../../components/Loader/Loader";
+import { Helmet } from "react-helmet-async";
 
 const ListUsers = () => {
     const [axiosSecure] = useAxiosSecure();
@@ -19,6 +20,9 @@ const ListUsers = () => {
   console.log(users);
   return (
     <div>
+      <Helmet>
+        <title>Users List</title>
+      </Helmet>
       <DashboardHeader title={"All Users List"} />
       <h2 className="my-5 font-medium">Total Users: {users.length}</h2>
       <div className="mb-8">

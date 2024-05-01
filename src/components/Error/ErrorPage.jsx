@@ -1,10 +1,14 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { Link, useRouteError } from "react-router-dom";
 
 const Error = () => {
   const { error } = useRouteError();
   return (
     <div className=" py-10 bg-[#F0F0F0] min-h-screen">
+      <Helmet>
+        <title>Error</title>
+      </Helmet>
       <div>
         <img
           className="w-2/5 mx-auto"

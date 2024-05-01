@@ -7,6 +7,7 @@ import banner from "../../assets/images/offerban.png";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet-async";
 
 const CategoryWise = () => {
   const { sub_category } = useParams();
@@ -31,6 +32,9 @@ const CategoryWise = () => {
   }
   return (
     <div className="pt-[75px] md:pt-[81px] dark:bg-gray-500">
+      <Helmet>
+        <title>{sub_category}</title>
+      </Helmet>
       <LoadPageTop />
       <div className="flex justify-center items-center p-2 lg:p-4 ">
         <img loading="lazy" className="rounded-xl" src={banner} alt="" />

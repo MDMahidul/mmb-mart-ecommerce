@@ -13,6 +13,7 @@ import useCategory from "../../hooks/useCategory";
 import Loader from "../../components/Loader/Loader";
 import { useState } from "react";
 import useProducts from "../../hooks/useProducts";
+import { Helmet } from "react-helmet-async";
 
 const Women = () => {
   const [products] = useProducts();
@@ -50,6 +51,9 @@ const Women = () => {
 
   return (
     <div className="pt-12 md:pt-24 dark:bg-gray-500">
+      <Helmet>
+        <title>Women</title>
+      </Helmet>
       <LoadPageTop />
       <Container>
         <div className=" flex flex-col gap-y-5 md:flex-row justify-center items-center py-10">

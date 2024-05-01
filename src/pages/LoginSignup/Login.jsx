@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ShopContext } from "../../Context/ShopProvider";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { userLogin, loading, setLoading, resetPassword, googleSignIn } =
@@ -91,6 +92,9 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center items-center min-h-screen bg-slate-200 dark:bg-slate-600">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form
           className="space-y-4"
@@ -180,7 +184,9 @@ const Login = () => {
         >
           <FcGoogle size={25} />
 
-          <p className="text-gray-900 dark:text-white group-hover:dark:text-gray-600">Continue with Google</p>
+          <p className="text-gray-900 dark:text-white group-hover:dark:text-gray-600">
+            Continue with Google
+          </p>
         </div>
       </div>
     </div>

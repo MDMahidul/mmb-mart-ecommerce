@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../../Context/ShopProvider";
 import { Link, useParams } from "react-router-dom";
 import Breadcrum from "../../components/Breadcrum/Breadcrum";
@@ -15,20 +15,23 @@ import useCategory from "../../hooks/useCategory";
 import Product from "../../components/Product/Product";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import useRole from "../../hooks/useRole";
+import { Helmet } from "react-helmet-async";
+import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 
 const ProductDetails = () => {
-  const { user, cartItems, setCartItems } = useContext(ShopContext);
+  const { user, setCartItems } = useContext(ShopContext);
   const { itemName } = useParams();
-  const [userData]=useRole();
-  
-console.log(userData);
+  const [userData] = useRole();
+
+  console.log(userData);
   /* fetch poduct details from api */
   const {
     data: product = [],
     isLoading,
     isError,
+    refetch,
   } = useQuery({
-    queryKey: ["productDetails"],
+    queryKey: ["productDetails", itemName],
     queryFn: async () => {
       try {
         const res = await axios.get(
@@ -40,6 +43,11 @@ console.log(userData);
       }
     },
   });
+
+  /* refetch the page after select new items */
+  useEffect(() => {
+    refetch();
+  }, [itemName, refetch]);
 
   /* add product to cart */
   const addToCart = (itemId) => {
@@ -56,7 +64,7 @@ console.log(userData);
         },
         body: JSON.stringify({ itemId: itemId }),
       })
-        .then((response) => response.json() )
+        .then((response) => response.json())
         .then((data) => {
           console.log(data);
           toast.success("Item added to cart!!!");
@@ -77,15 +85,44 @@ console.log(userData);
     category,
     sub_category,
   } = product;
-  const [categoriesWiseProducts] = useCategory(category);
+  /*  const [categoriesWiseProducts] = useCategory(category); */
   const [activeComponent, setActiveComponent] = useState("Description");
 
   // Function to handle component toggle
   const handleComponentToggle = (component) => {
     setActiveComponent(component);
   };
+
+  const [activeImage, setActiveImage] = useState(0);
+
+  const handleImageClick = (index) => {
+    setActiveImage(index);
+  };
+
+  const images = [
+    {
+      id: 1,
+      src: image,
+    },
+    {
+      id: 2,
+      src: image,
+    },
+    {
+      id: 3,
+      src: image,
+    },
+    {
+      id: 4,
+      src: image,
+    },
+  ];
+
   return (
     <div className="py-12 md:py-20 dark:bg-gray-500">
+      <Helmet>
+        <title>{name}</title>
+      </Helmet>
       <LoadPageTop />
       <Container>
         <Breadcrum product={product} />
@@ -93,31 +130,22 @@ console.log(userData);
         <div className="flex flex-col md:flex-row gap-5 md:gap-0">
           <div className="md:w-1/2   flex  lg:flex-col-reverse xl:flex-row gap-3">
             <div className="flex flex-col lg:flex-row xl:flex-col gap-[10px] md:gap-[15px]">
-              <img
-                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
-                src={image}
-                alt=""
-              />
-              <img
-                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
-                src={image}
-                alt=""
-              />
-              <img
-                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
-                src={image}
-                alt=""
-              />
-              <img
-                className="w-[102px] md:w-[90px] lg:w-[90px] xl:w-40"
-                src={image}
-                alt=""
-              />
+              {images.map((image, index) => (
+                <img
+                  key={image.id}
+                  className={`w-[102px] md:w-[90px] lg:w-[90px] xl:w-40 cursor-pointer ${
+                    activeImage === index ? "border  border-amber-500" : ""
+                  }`}
+                  src={image.src}
+                  alt=""
+                  onClick={() => handleImageClick(index)}
+                />
+              ))}
             </div>
             <div>
               <img
                 className="w-[450px] md:w-[500px] lg:w-[500px] xl:w-[700px]"
-                src={image}
+                src={images[activeImage].src}
                 alt=""
               />
             </div>
@@ -151,7 +179,7 @@ console.log(userData);
               <p className="text-lg md:text-xl font-semibold mt-4 lg:mt-8 text-gray-600 dark:text-white">
                 Select Size
               </p>
-              <div className="flex gap-5 my-4 lg:my-6">
+              <div className="flex gap-4 md:gap-5 my-4 lg:my-6">
                 <div className="product_size">S</div>
                 <div className="product_size">M</div>
                 <div className="product_size">L</div>
@@ -202,12 +230,7 @@ console.log(userData);
           </button>
         </div>
         {activeComponent === "Description" ? <Description /> : <Reviews />}
-        <SectionHeader heading={"Related Products"} />
-        <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-5">
-          {categoriesWiseProducts.slice(0, 4).map((item) => (
-            <Product key={item.id} item={item} />
-          ))}
-        </div>
+        <RelatedProducts category={category} />
       </Container>
     </div>
   );

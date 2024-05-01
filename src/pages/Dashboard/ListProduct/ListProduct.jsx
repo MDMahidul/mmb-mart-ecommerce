@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Loader/Loader";
 import DashboardHeader from "../../../components/SectionHeader/DashboardHeader";
 import useProducts from "../../../hooks/useProducts";
@@ -8,6 +9,9 @@ const ListProduct = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Poducts List</title>
+      </Helmet>
       <DashboardHeader title={"All Products List"} />
       <h2 className="my-5 font-medium">Total Products: {products.length}</h2>
       <div className="mb-8">
