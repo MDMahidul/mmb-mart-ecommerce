@@ -111,6 +111,7 @@ const Navbar2 = () => {
           <ActiveLink to="/" active>
             Home
           </ActiveLink>
+          <ActiveLink to="/collections">Shop</ActiveLink>
           <ActiveLink to="/men">Men</ActiveLink>
           <ActiveLink to="/women">Women</ActiveLink>
           <ActiveLink to="/kids">Kids</ActiveLink>

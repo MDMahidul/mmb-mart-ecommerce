@@ -21,7 +21,7 @@ const Footer = () => {
     <div>
       <footer className=" py-14 bg-amber-100 dark:bg-gray-600 text-base-content">
         <Container>
-          <div className="flex flex-col md:flex-row justify-between md:items-center gap-10 md:gap-0">
+          <div className="flex flex-col md:flex-row justify-between  gap-10 md:gap-0">
             <aside className="md:w-1/4">
               <img loading="lazy" className="w-52 md:w-64" src={logo} />
               <p className="text-sm ms-2 mt-2 dark:text-white">
@@ -73,10 +73,10 @@ const Footer = () => {
               </div>
             </nav>
             <nav>
-              <header className="font-bold text-xl mb-3 dark:text-white">
+              <header className="font-bold text-xl mb-3 dark:text-white ">
                 Quick Links
               </header>
-              <div className="flex flex-col space-y-3 text-base dark:text-white">
+              <div className="flex md:flex-col gap-4 md:gap-0 items-center md:items-start md:space-y-3 text-base  dark:text-white">
                 <Link to="/" className="link link-hover hover:text-amber-500">
                   Shop
                 </Link>

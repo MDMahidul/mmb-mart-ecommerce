@@ -11,6 +11,7 @@ import {
 import { FaArrowRightLong } from "react-icons/fa6";
 import Container from "../../../components/Container";
 import { Link } from "react-router-dom";
+import Reveal from "../../../components/FramerMotion/Reveal";
 
 const Banner = () => {
   return (
@@ -48,11 +49,11 @@ const Banner = () => {
               <p className="lg:text-7xl md:text-5xl text-2xl leading-none font-robotoSlab font-semibold md:max-w-sm pb-5  md:my-5 bg-gradient-to-br from-pink-500 to-orange-400 text-transparent bg-clip-text">
                 Shop Now & Elevate Your Style!
               </p>
-              <button className="outline-btn group">
+              <Link to="/collections" className="outline-btn group">
                 <span className="text-xs md:text-base relative flex items-center gap-1 md:gap-2 px-2 py-1 md:px-5 md:py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-500 rounded-md group-hover:bg-opacity-0">
                   Explore More <FaArrowRightLong className="md:w-4 md:h-4" />
                 </span>
-              </button>
+              </Link>
             </div>
             <img
               className="w-5/12 md:w-6/12 transform md:scale-100 scale-x-[-1]"
@@ -63,24 +64,30 @@ const Banner = () => {
 
           <div className="flex gap-4 md:gap-2 md:flex-col  md:gap-y-8 dark:text-white">
             <div>
-              <p className="text-xs md:text-sm">Kids items</p>
-              <Link className="text-sm md:text-lg font-medium md:font-semibold ">
-                Special Price
-              </Link>
+              <Reveal>
+                <p className="text-xs md:text-sm">new items</p>
+                <Link className="text-sm md:text-base font-medium md:font-semibold ">
+                  Special Price
+                </Link>
+              </Reveal>
             </div>
             <hr className="hidden md:block" />
             <div>
-              <p className="text-xs md:text-sm">Stylist Hoodies</p>
-              <Link className="text-sm md:text-lg font-medium md:font-semibold">
-                New Arrival
-              </Link>
+              <Reveal>
+                <p className="text-xs md:text-sm">Stylist Hoodies</p>
+                <Link className="text-sm md:text-base font-medium md:font-semibold">
+                  New Arrival
+                </Link>
+              </Reveal>
             </div>
             <hr className="hidden md:block" />
             <div>
-              <p className="text-xs md:text-sm">Winter Colection</p>
-              <Link className="text-sm md:text-lg font-medium md:font-semibold">
-                Trending
-              </Link>
+              <Reveal>
+                <p className="text-xs md:text-sm">Winter Collection</p>
+                <Link className="text-sm md:text-base font-medium md:font-semibold">
+                  Trending
+                </Link>
+              </Reveal>
             </div>
           </div>
         </div>

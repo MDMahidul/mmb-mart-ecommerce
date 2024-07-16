@@ -34,3 +34,4 @@ It's a small e-commerce website named MMB Mart.
 ### Here is the live link of the project:
 Click here: [MMB Mart](https://mmb-mart.web.app/)
 
+// added framer motion animatin and new collection page 

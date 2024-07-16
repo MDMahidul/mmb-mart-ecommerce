@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../../Context/ShopProvider";
-import { Link, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import Breadcrum from "../../components/Breadcrum/Breadcrum";
 import { Rating } from "@smastrom/react-rating";
 import Container from "../../components/Container";
@@ -11,9 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
 import toast from "react-hot-toast";
-import useCategory from "../../hooks/useCategory";
-import Product from "../../components/Product/Product";
-import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import useRole from "../../hooks/useRole";
 import { Helmet } from "react-helmet-async";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
@@ -23,7 +20,7 @@ const ProductDetails = () => {
   const { itemName } = useParams();
   const [userData] = useRole();
 
-  console.log(userData);
+  //console.log(userData);
   /* fetch poduct details from api */
   const {
     data: product = [],
@@ -93,12 +90,14 @@ const ProductDetails = () => {
     setActiveComponent(component);
   };
 
+  /* for image gallery */
   const [activeImage, setActiveImage] = useState(0);
 
   const handleImageClick = (index) => {
     setActiveImage(index);
   };
 
+  /* right now using single image thats why make a object of four image with different index */
   const images = [
     {
       id: 1,

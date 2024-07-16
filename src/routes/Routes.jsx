@@ -16,6 +16,7 @@ import ListUsers from "../pages/Dashboard/ListUsers/ListUsers";
 import Error from "../components/Error/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import Collections from "../pages/Collections/Collections";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:'/collections',
+        element:<Collections/>
+      }
     ],
   },
   {

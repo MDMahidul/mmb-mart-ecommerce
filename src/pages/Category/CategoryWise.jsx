@@ -43,12 +43,14 @@ const CategoryWise = () => {
       <Container>
         <SectionHeader heading={sub_category} />
         {isError && (
-          <p className="text-center text-gray-400">Something went wrong!</p>
+          <p className="my-[10vh] pb-10 text-center text-lg md:text-2xl font-medium text-slate-400">
+            Something went wrong!
+          </p>
         )}
         {isLoading ? (
           <Loader height={"h-[40vh]"} />
         ) : subCategoriseData.length <= 0 ? (
-          <p className="text-center text-2xl font-medium text-slate-400">
+          <p className="my-[10vh] pb-10  text-center text-lg md:text-2xl font-medium text-slate-400">
             No items found
           </p>
         ) : (

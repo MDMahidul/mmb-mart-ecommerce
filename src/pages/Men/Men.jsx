@@ -55,13 +55,13 @@ const Men = () => {
       <Container>
         <div className=" flex flex-col gap-y-5 md:flex-row justify-center items-center py-10">
           <div className="md:w-1/2  dark:text-white text-center ">
-            <p className="text-sm md:text-lg py-2 dark:text-white text-red-500 font-semibold">
-              Check Out New Collection{" "}
+            <p className="text-sm md:text-lg py-2 dark:text-white text-red-500 font-semibold hidden md:flex">
+              Check Out New Collections{" "}
             </p>
-            <h2 className="text-xl sm:text-2xl md:text-6xl  font-semibold ">
-              Elevate Your Style with our Premier Men's Collection
+            <h2 className="text-lg sm:text-2xl md:text-6xl font-medium  sm:font-semibold ">
+              Elevate Your Style with our Premier Men's Collections
             </h2>
-            <p className="mt-5 text-base md:text-2xl mb-2 md:mb-0 md:py-4 dark:text-white text-amber-500 font-semibold md:font-semibold">
+            <p className="mt-2 md:mt-5 text-sm md:text-2xl mb-2 md:mb-0 md:py-4 dark:text-white text-amber-500 font-medium md:font-semibold">
               Exclusive Collections
             </p>
 
@@ -82,7 +82,7 @@ const Men = () => {
             </p>
             <div className="flex items-center gap-4">
               <form className="max-w-sm" onChange={handleCategoryChange}>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col md:flex-row items-center gap-2">
                   <label
                     htmlFor="underline_select"
                     className="text-sm md:text-base md:font-semibold dark:text-white"
